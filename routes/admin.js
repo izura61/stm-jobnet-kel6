@@ -203,7 +203,7 @@ router.get("/web-monitoring", adminAuth, async (req, res) => {
 
 router.get("/logout", (req, res) => {
   req.session.destroy(() => {
-    res.redirect("/admin/verify"); 
+    res.redirect("/"); 
   });
 });
 
