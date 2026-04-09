@@ -3,8 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const adminAuth = require("../middlewares/adminAuth");
 const Session = require("../models/sessionModel");
-const auth = require("../middlewares/authMiddleware");
 
+const Admin = require("../models/adminModel");
 const Perusahaan = require("../models/perusahaanModel");
 const Siswa = require("../models/siswaModel");
 const Lowongan = require("../models/lowonganModel");
@@ -12,7 +12,7 @@ const Pendaftaran = require("../models/pendaftaranModel");
 const Log = require("../models/logModel");
 
 router.get("/verify", (req, res) => {
-  if (!req.session.adminVerified) {
+  if (!req.session.adminId) {
     return res.render("dashboard/admin/verify");
   }
   return res.redirect("/admin/dashboard");
@@ -20,12 +20,25 @@ router.get("/verify", (req, res) => {
 
 router.post("/verify", async (req, res) => {
   try {
-    const { secretKey } = req.body;
-    if (!secretKey || secretKey !== process.env.ADMIN_VERIFY_SECRET) {
-      return res.json({ success: false });
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.json({ success: false, message: "Username dan Password wajib diisi" });
     }
-    req.session.adminVerified = true;
+
+    const admin = await Admin.findOne({ username: username });
+    if (!admin) {
+        return res.json({ success: false, message: "Kredensial tidak valid" });
+    }
+
+    const isMatch = await bcrypt.compare(password, admin.password);
+    if (!isMatch) {
+        return res.json({ success: false, message: "Kredensial tidak valid" });
+    }
+
+    req.session.adminId = admin._id;
     return res.json({ success: true });
+
   } catch (error) {
     console.log(error);
     return res.status(500).json({ success: false });
@@ -194,7 +207,7 @@ router.get("/web-monitoring", adminAuth, async (req, res) => {
 
 router.get("/logout", (req, res) => {
   req.session.destroy(() => {
-    res.redirect("/");
+    res.redirect("/admin/verify"); 
   });
 });
 
