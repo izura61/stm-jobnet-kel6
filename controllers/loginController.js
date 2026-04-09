@@ -28,17 +28,18 @@ exports.login = async (req, res) => {
         }
 
         if (!user) {
-            return res.render("login", { error: "Email atau Username tidak terdaftar" });
+            return res.render("login", { success: false, message: "Email atau Username tidak terdaftar" });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.render("login", { error: "Password salah" });
+            return res.render("login", { success: false, message: "Password salah" });
         }
 
         if (role === "perusahaan" && user.isVerified === false) {
             return res.render("login", {
-                error: "Akun perusahaan anda sedang menunggu verifikasi admin"
+                success: false,
+                message: "Akun perusahaan anda sedang menunggu verifikasi"
             });
         }
 
@@ -49,9 +50,7 @@ exports.login = async (req, res) => {
         );
 
         res.cookie("token", token, { httpOnly: true });
-        
-        if (role === "siswa") return res.redirect("/siswa/dashboard");
-        if (role === "perusahaan") return res.redirect("/perusahaan/dashboard");
+        return res.json({ success: true, role: role, token: token })
 
     } catch (error) {
         console.error(error); 
