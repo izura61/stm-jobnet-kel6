@@ -25,7 +25,7 @@ module.exports = async (req, res, next) => {
             userData = await Perusahaan.findById(decoded.id);
             if (userData && userData.isVerified === false) {
                 res.clearCookie("token");
-                return res.redirect("/login?error=awaiting_verification");
+                return res.redirect(`<script>alert("Akun perusahaan Anda masih menunggu verifikasi."); window.location.href="/login";</script>`);
             }
             
         } else if (decoded.role === 'admin') {
