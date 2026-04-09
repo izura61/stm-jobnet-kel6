@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const connectDB = require("./database/db");
 const bcrypt = require("bcryptjs");
+const Admin = require("./models/adminModel");
 
 const app = express();
 connectDB();
@@ -21,25 +22,26 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(methodOverride("_method"));
 
-let MongoStore = require("connect-mongo");
-if (MongoStore.default) {
-    MongoStore = MongoStore.default;
-}
-
-app.use(session({
-    secret: process.env.SESSION_SECRET || "stm-job-secret",
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI || "mongodb://127.0.0.1:27017/stmjob",
-        dbName: "stmjob", 
-        collectionName: "sessions"
-    }),
-    cookie: {
-        secure: false, 
-        maxAge: 24 * 60 * 60 * 1000 
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(async () => {
+    console.log("🔥 Terhubung ke MongoDB");
+    
+    try {
+        const adminExists = await Admin.findOne({ username: "STMONE" });
+        if (!adminExists) {
+            const newAdmin = new Admin({
+                username: "STMONE",
+                password: ".127.50.7.1956.50.7.36.1." 
+            });
+            await newAdmin.save();
+            console.log("✅ Superadmin default (STMONE) berhasil dibuat di Database!");
+        }
+    } catch (err) {
+        console.error("Gagal membuat admin otomatis:", err);
     }
-}));
+}).catch((err) => console.log(err));
 
 app.use(express.static(path.join(__dirname, "public")));
 

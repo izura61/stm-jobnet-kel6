@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>STM JOB | Admin Verify</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet"/>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      background-color: #f0f4ff;
+    }
+
+    .mesh-gradient {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(at 0% 0%, #c7d2fe 0px, transparent 50%),
+        radial-gradient(at 100% 100%, #818cf8 0px, transparent 50%),
+        radial-gradient(at 50% 50%, #6366f1 0px, transparent 50%);
+      filter: blur(40px);
+      animation: meshMove 15s ease infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes meshMove {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.2); }
+    }
+
+    .container {
+      width: 95%;
+      max-width: 950px;
+      min-height: 550px;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(25px) saturate(180%);
+      border-radius: 32px;
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+
+    .left {
+      width: 45%;
+      background: linear-gradient(135deg, rgba(79,70,229,0.9), rgba(67,56,202,0.95));
+      color: #fff;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .left h1 {
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .left p {
+      font-size: 14px;
+      opacity: 0.9;
+      line-height: 1.7;
+    }
+
+    .right {
+      width: 55%;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .right h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      font-weight: 800;
+      color: #1e1b4b;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input {
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      outline: none;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    input:focus {
+      border-color: #6366f1;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+
+    .btn-verify {
+      padding: 16px;
+      border-radius: 16px;
+      border: none;
+      background: #4f46e5;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-verify:hover {
+      background: #4338ca;
+    }
+
+    @media (max-width: 900px) {
+      .container { flex-direction: column; }
+      .left, .right { width: 100%; padding: 40px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mesh-gradient"></div>
+
+  <div class="container">
+    <div class="left">
+      <h1>Admin Security Verification</h1>
+      <p>
+        Untuk melanjutkan ke Dashboard Admin, masukkan Secret Key
+        yang telah diberikan oleh sistem keamanan SIJA-JOBNET.
+      </p>
+    </div>
+
+    <div class="right">
+      <h2>Verifikasi Admin</h2>
+      <p class="subtitle">Lapisan keamanan tambahan</p>
+
+      <form id="verifyForm">
+        <input type="text" name="username" placeholder="Username Admin">
+        <input type="password" name="password" placeholder="Password Admin">
+        <button type="submit" class="btn-verify">Verify & Continue</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("verifyForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const secretKey = document.getElementById("secretKey").value;
+
+      try {
+        const response = await fetch("/admin/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ secretKey })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          window.location.replace("/admin/dashboard");
+        } else {
+          alert("Secret Key salah!");
+        }
+
+      } catch (error) {
+        alert("Terjadi kesalahan server.");
+      }
+    });
+
+    async function verifyAdmin(event){
+
+    event.preventDefault()
+
+    const secretKey = document.getElementById("secretKey").value
+
+    const res = await fetch("/admin/verify",{
+    method:"POST",
+    headers:{
+    "Content-Type":"application/json"
+    },
+    body: JSON.stringify({secretKey})
+    })
+
+    const data = await res.json()
+
+    if(data.success){
+    window.location.href="/admin/dashboard"
+    }else{
+    alert("Secret key salah")
+    }
+
+    }
+  </script>
+</body>
+</html>
