@@ -66,7 +66,7 @@ router.get("/dashboard", adminAuth, async (req, res) => {
 
 router.get("/user-management", adminAuth, async (req, res) => {
   try {
-    if (!req.session.adminVerified) return res.redirect("/admin/verify");
+    // Baris pengecekan adminVerified SUDAH DIHAPUS dari sini
 
     const perusahaanUsers = await Perusahaan.find();
     const siswaUsers = await Siswa.find();
@@ -79,15 +79,13 @@ router.get("/user-management", adminAuth, async (req, res) => {
       currentPage: "user-management"
     });
   } catch (err) {
-    console.error(err);
-    res.redirect("/admin/dashboard");
+    console.error("Error di User Management:", err);
+    res.status(500).send("Gagal memuat halaman User Management");
   }
 });
 
 router.get('/user-profile/:role/:id', adminAuth, async (req, res) => {
     try {
-        if (!req.session.adminVerified) return res.redirect('/admin/verify');
-
         const { role, id } = req.params;
         let userData;
 
@@ -108,6 +106,7 @@ router.get('/user-profile/:role/:id', adminAuth, async (req, res) => {
             currentPage: 'user-management'
         });
     } catch (err) {
+        console.error("Error di User Profile:", err);
         res.redirect('/admin/user-management');
     }
 });
@@ -117,10 +116,8 @@ router.post("/delete-foto/:role/:id", adminAuth, async (req, res) => {
         const { role, id } = req.params;
         
         if (role === 'siswa') {
-      
             await Siswa.findByIdAndUpdate(id, { $unset: { foto: 1 } }, { strict: false });
         } else if (role === 'perusahaan') {
-   
             await Perusahaan.findByIdAndUpdate(id, { $unset: { foto: 1, logo: 1, image: 1 } }, { strict: false });
         }
 
@@ -191,7 +188,6 @@ router.get("/report-management", adminAuth, async (req, res) => {
 
 router.get("/web-monitoring", adminAuth, async (req, res) => {
   try {
-
     const logs = await Log.find().sort({ createdAt: -1 });
 
     res.render("dashboard/admin/web-monitoring", {
