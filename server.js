@@ -2,36 +2,16 @@ require("./utils/cleanupLogs");
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const session = require("express-session"); // Pastikan ini ada
+const session = require("express-session");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
-const mongoose = require("mongoose");
+const connectDB = require("./database/db");
 const bcrypt = require("bcryptjs");
 const Admin = require("./models/adminModel");
 
 const app = express();
-
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(async () => {
-    console.log("🔥 Terhubung ke MongoDB");
-    
-    try {
-        const adminExists = await Admin.findOne({ username: "STMONE" });
-        if (!adminExists) {
-            const newAdmin = new Admin({
-                username: "STMONE",
-                password: ".127.50.7.1956.50.7.36.1." 
-            });
-            await newAdmin.save();
-            console.log("✅ Superadmin default (STMONE) berhasil dibuat di Database!");
-        }
-    } catch (err) {
-        console.error("Gagal membuat admin otomatis:", err);
-    }
-}).catch((err) => console.log(err));
+connectDB();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -41,15 +21,37 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "public")));
-app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 
 app.use(session({
     secret: process.env.SESSION_SECRET || "stm-job-secret",
     resave: false,
-    saveUninitialized: false, 
+    saveUninitialized: false,
     cookie: { secure: false }
 }));
+
+const mongoose = require("mongoose");
+
+mongoose.connect(process.env.MONGO_URI).then(async () => {
+    console.log("🔥 Terhubung ke MongoDB");
+    
+    try {
+        const adminExists = await Admin.findOne({ username: "STMONE" });
+        if (!adminExists) {
+            const newAdmin = new Admin({
+                username: "STMONE",
+                password: ".127.50.7.1956.50.7.36.1."
+            });
+            await newAdmin.save();
+            console.log("✅ Superadmin default (STMONE) berhasil dibuat di Database!");
+        }
+    } catch (err) {
+        console.error("Gagal membuat admin otomatis:", err);
+    }
+}).catch((err) => console.log(err));
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 
 const loginRoutes = require("./routes/login");
 const tamuRoutes = require("./routes/tamu");
@@ -65,7 +67,7 @@ const auth = require("./middlewares/authMiddleware");
 const loggerMiddleware = require("./middlewares/loggerMiddleware");
 
 app.use(auth);            
-app.use(loggerMiddleware); 
+app.use(loggerMiddleware);
 
 const adminRoutes = require("./routes/admin");
 const lowonganRoutes = require("./routes/lowongan");
