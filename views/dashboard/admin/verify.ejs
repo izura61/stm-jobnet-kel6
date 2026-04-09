@@ -151,7 +151,7 @@
       <h1>Admin Security Verification</h1>
       <p>
         Untuk melanjutkan ke Dashboard Admin, masukkan Secret Key
-        yang telah diberikan oleh sistem keamanan STM JOB.
+        yang telah diberikan oleh sistem keamanan SIJA-JOBNET.
       </p>
     </div>
 
@@ -160,7 +160,8 @@
       <p class="subtitle">Lapisan keamanan tambahan</p>
 
       <form id="verifyForm">
-        <input type="password" id="secretKey" placeholder="Masukkan Secret Key" required />
+        <input type="text" name="username" placeholder="Username Admin">
+        <input type="password" name="password" placeholder="Password Admin">
         <button type="submit" class="btn-verify">Verify & Continue</button>
       </form>
     </div>
@@ -170,13 +171,14 @@
     document.getElementById("verifyForm").addEventListener("submit", async function(e) {
       e.preventDefault();
 
-      const secretKey = document.getElementById("secretKey").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
 
       try {
         const response = await fetch("/admin/verify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ secretKey })
+          body: JSON.stringify({ username, password }) 
         });
 
         const result = await response.json();
@@ -184,37 +186,13 @@
         if (result.success) {
           window.location.replace("/admin/dashboard");
         } else {
-          alert("Secret Key salah!");
+          alert("Username atau Password salah!");
         }
 
       } catch (error) {
         alert("Terjadi kesalahan server.");
       }
     });
-
-    async function verifyAdmin(event){
-
-    event.preventDefault()
-
-    const secretKey = document.getElementById("secretKey").value
-
-    const res = await fetch("/admin/verify",{
-    method:"POST",
-    headers:{
-    "Content-Type":"application/json"
-    },
-    body: JSON.stringify({secretKey})
-    })
-
-    const data = await res.json()
-
-    if(data.success){
-    window.location.href="/admin/dashboard"
-    }else{
-    alert("Secret key salah")
-    }
-
-    }
   </script>
 </body>
 </html>
