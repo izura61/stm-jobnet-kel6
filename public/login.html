@@ -242,7 +242,8 @@
 
     <script>
       document.getElementById("formLogin").addEventListener("submit", async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Mencegah halaman refresh
+        
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         const submitBtn = document.getElementById("submitBtn");
@@ -261,24 +262,30 @@
           const result = await response.json();
 
           if (result.success) {
+            // Jika berhasil, simpan token
             if (result.token) localStorage.setItem("token", result.token);
 
+            // ==========================================
+            // PERBAIKAN RUTE (SESUAI DENGAN BACKEND KAMU)
+            // ==========================================
             if (result.role === "admin") {
-              window.location.replace("/admin/verify");
+              window.location.replace("/admin/dashboard"); // Langsung ke dashboard admin
             } else if (result.role === "perusahaan") {
-              window.location.replace("/dashboard/perusahaan");
+              window.location.replace("/perusahaan/dashboard"); // Rute diperbaiki
             } else if (result.role === "siswa") {
-              window.location.replace("/dashboard/siswa");
+              window.location.replace("/siswa/dashboard"); // Rute diperbaiki
             } else {
-              window.location.replace("/dashboard/tamu");
+              window.location.replace("/"); // Kembali ke halaman utama
             }
           } else {
-            alert("Login Gagal: " + (result.message || "Email atau Password salah"));
+            // MUNCULKAN POP-UP ALERT JIKA GAGAL (Atau belum diverifikasi)
+            alert(result.message || "Email atau Password salah!");
             submitBtn.innerText = "Sign In";
             submitBtn.style.opacity = "1";
             submitBtn.disabled = false;
           }
         } catch (err) {
+          console.error(err);
           alert("Terjadi kesalahan koneksi ke server.");
           submitBtn.innerText = "Sign In";
           submitBtn.style.opacity = "1";
@@ -287,7 +294,7 @@
       });
 
       function guestLogin() {
-        window.location.href = "/dashboard/tamu";
+        window.location.href = "/";
       }
     </script>
   </body>
