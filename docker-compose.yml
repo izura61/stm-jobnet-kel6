@@ -10,7 +10,7 @@ services:
       - "6020:5000"
     environment:
       - PORT=5000
-      - MONGO_URI=mongodb://mongodb:27017/stmjob
+      - MONGO_URI=mongodb://mongodb:27017/stm_job
       - SESSION_SECRET=stm-job-secret
       - JWT_SECRET=Comneta@50
     depends_on:
