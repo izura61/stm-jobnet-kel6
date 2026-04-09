@@ -1,5 +1,5 @@
 services:
-  # Service untuk Backend Node.js
+  
   app:
     build:
       context: .
@@ -7,19 +7,17 @@ services:
     container_name: kel6-sija-jobnet-app
     restart: unless-stopped
     ports:
-      # Laptop Anda (6020) diteruskan ke Port Node.js (5000)
       - "6020:5000"
     environment:
-      # Inject variabel lingkungan agar Node.js konek ke container MongoDB
       - PORT=5000
       - MONGO_URI=mongodb://mongodb:27017/stmjob
       - SESSION_SECRET=stm-job-secret
+      - JWT_SECRET=Comneta@50
     depends_on:
       - mongodb
     networks:
       - kel6-network
 
-  # Service untuk Database (MongoDB)
   mongodb:
     image: mongo:4.4
     container_name: kel6-mongodb
@@ -27,7 +25,6 @@ services:
     ports:
       - "27066:27017" 
     environment:
-      # Samakan nama database awal dengan yang ada di Node.js
       MONGO_INITDB_DATABASE: stmjob 
     volumes:
       - kel6-mongo-data:/data/db
