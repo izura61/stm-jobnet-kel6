@@ -25,8 +25,7 @@ module.exports = async (req, res, next) => {
             userData = await Perusahaan.findById(decoded.id);
             if (userData && userData.isVerified === false) {
                 res.clearCookie("token");
-                // DIUBAH: Arahkan saja ke /login bersih. Pop-up akan ditangani oleh controller saat mereka mencoba login lagi.
-                return res.redirect("/login");
+                return res.redirect("/login?error=awaiting_verification");
             }
             
         } else if (decoded.role === 'admin') {
