@@ -6,22 +6,7 @@ const Perusahaan = require("../models/perusahaanModel");
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        if (email === process.env.SUPERADMIN_USERNAME) {
-            if (password === process.env.SUPERADMIN_PASSWORD) {
-                const token = jwt.sign(
-                    { id: "superadmin", role: "admin", name: process.env.SUPERADMIN_USERNAME },
-                    process.env.JWT_SECRET,
-                    { expiresIn: "1d" }
-                );
-                res.cookie("token", token, { httpOnly: true });
-                req.session.adminVerified = true; 
-                return res.redirect("/admin/dashboard");
-            } else {
-                return res.render("login", { error: "Password Admin Salah!" });
-            }
-        }
-
+        
         let user = await Siswa.findOne({ email });
         let role = "siswa";
 
