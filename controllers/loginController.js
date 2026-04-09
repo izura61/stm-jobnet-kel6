@@ -2,11 +2,23 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Siswa = require("../models/siswaModel");
 const Perusahaan = require("../models/perusahaanModel");
+const Admin = require("../models/adminModel");
 
 exports.login = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        
+        const { email, password } = req.body; 
+        const admin = await Admin.findOne({ username: email });
+        if (admin) {
+            const isMatch = await bcrypt.compare(password, admin.password);
+            if (isMatch) {
+                req.session.adminId = admin._id; 
+                req.session.adminVerified = true; 
+                return res.redirect("/admin/dashboard"); 
+            } else {
+                return res.render("login", { error: "Password Admin Salah!" });
+            }
+        }
+
         let user = await Siswa.findOne({ email });
         let role = "siswa";
 
