@@ -13,9 +13,11 @@ exports.login = async (req, res) => {
             if (isMatch) {
                 req.session.adminId = admin._id; 
                 req.session.adminVerified = true; 
-                return res.redirect("/admin/dashboard"); 
+                // DIUBAH: Mengirim respons JSON sukses untuk admin
+                return res.json({ success: true, role: "admin" }); 
             } else {
-                return res.render("login", { error: "Password Admin Salah!" });
+                // DIUBAH: Mengirim JSON error
+                return res.json({ success: false, message: "Password Admin Salah!" });
             }
         }
 
@@ -28,18 +30,21 @@ exports.login = async (req, res) => {
         }
 
         if (!user) {
-            return res.render("login", { success: false, message: "Email atau Username tidak terdaftar" });
+            // DIUBAH: Mengirim JSON error
+            return res.json({ success: false, message: "Email atau Username tidak terdaftar" });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.render("login", { success: false, message: "Password salah" });
+            // DIUBAH: Mengirim JSON error
+            return res.json({ success: false, message: "Password salah" });
         }
 
         if (role === "perusahaan" && user.isVerified === false) {
-            return res.render("login", {
-                success: false,
-                message: "Akun perusahaan anda sedang menunggu verifikasi"
+            // DIUBAH: Mengirim JSON pesan belum verifikasi agar ditangkap jadi pop-up di HTML
+            return res.json({ 
+                success: false, 
+                message: "Akun perusahaan Anda sedang menunggu verifikasi admin. Silakan tunggu." 
             });
         }
 
@@ -50,10 +55,13 @@ exports.login = async (req, res) => {
         );
 
         res.cookie("token", token, { httpOnly: true });
-        return res.json({ success: true, role: role, token: token })
+        
+        // DIUBAH: Mengirim JSON sukses untuk siswa/perusahaan
+        return res.json({ success: true, role: role, token: token });
 
     } catch (error) {
         console.error(error); 
-        res.render("login", { error: "Terjadi kesalahan pada server" });
+        // DIUBAH: Mengirim JSON error
+        return res.json({ success: false, message: "Terjadi kesalahan pada server" });
     }
 };
