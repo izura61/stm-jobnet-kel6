@@ -1,0 +1,225 @@
+<%- include('partials/header', { currentPage: 'pelamar', title: 'Daftar Pelamar' }) %>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="mb-12">
+        <h1 class="text-4xl font-black text-slate-800 tracking-tighter">
+            Pelamar <span class="text-[#7f97d9]">Masuk</span>
+        </h1>
+        <p class="text-slate-500 mt-2">Kelola semua pengajuan lamaran dan tinjau kualifikasi kandidat secara real-time.</p>
+    </div>
+
+    <div class="bg-white rounded-[3rem] border border-slate-100 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50/50">
+                        <th class="px-8 py-6 text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">Identitas Pelamar</th>
+                        <th class="px-8 py-6 text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">Posisi Lowongan</th>
+                        <th class="px-8 py-6 text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">Status</th>
+                        <th class="px-8 py-6 text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    <% if (typeof pendaftaran !== 'undefined' && pendaftaran.length > 0) { %>
+                        <% pendaftaran.forEach(p => { %>
+                            <% 
+                                const isGuest = !p.pendaftar;
+                                const dataUser = p.pendaftar || p.tamu || {}; 
+                                
+                                const modalData = {
+                                    nama: dataUser.name || dataUser.nama || 'Anonim',
+                                    email: dataUser.email || '-',
+                                    // LOGIKA: Siswa jangan pakai whatsapp
+                                    whatsapp: isGuest ? (dataUser.telepon || dataUser.whatsapp || '-') : null,
+                                    nis: dataUser.nis || null,
+                                    // LOGIKA: Tamu jangan pakai skill
+                                    skill: isGuest ? null : (dataUser.skill || null),
+                                    foto: dataUser.foto || null,
+                                    cv: isGuest ? p.cv_tamu : (dataUser.cv || null),
+                                    isGuest: isGuest
+                                };
+
+                                const safeJson = JSON.stringify(modalData).replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                            %>
+                            <tr class="hover:bg-slate-50/30 transition-colors">
+                                <td class="px-8 py-6">
+                                    <div class="flex items-center gap-4">
+                                        <% 
+                                            const avatar = (modalData.foto && modalData.foto !== 'default-user.png') 
+                                                ? '/uploads/profile/' + modalData.foto 
+                                                : "https://ui-avatars.com/api/?name=" + encodeURIComponent(modalData.nama) + "&background=7f97d9&color=fff";
+                                        %>
+                                        <img src="<%= avatar %>" class="w-10 h-10 rounded-full object-cover border border-slate-100 shadow-sm">
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <p class="font-bold text-slate-800"><%= modalData.nama %></p>
+                                                <span class="px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-tighter <%= isGuest ? 'bg-amber-100 text-amber-600' : 'bg-blue-100 text-blue-600' %>">
+                                                    <%= isGuest ? 'Tamu' : 'Siswa' %>
+                                                </span>
+                                            </div>
+                                            <button onclick="showProfileModal('<%= safeJson %>')" class="text-[10px] font-black text-[#7f97d9] uppercase tracking-widest hover:underline mt-0.5">
+                                                Lihat Detail Profil
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="px-8 py-6">
+                                    <p class="text-sm font-bold text-slate-700"><%= p.lowongan ? p.lowongan.judul : 'Lowongan Terhapus' %></p>
+                                    <p class="text-[10px] text-slate-400 mt-1 uppercase font-bold tracking-tighter">
+                                        Tgl Daftar: <%= p.createdAt ? p.createdAt.toLocaleDateString('id-ID') : '-' %>
+                                    </p>
+                                </td>
+
+                                <td class="px-8 py-6">
+                                    <% 
+                                        let statusClass = 'bg-slate-100 text-slate-500';
+                                        if(p.status === 'Diterima') statusClass = 'bg-emerald-100 text-emerald-600';
+                                        if(p.status === 'Ditolak') statusClass = 'bg-red-100 text-red-600';
+                                    %>
+                                    <span class="px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest <%= statusClass %>">
+                                        <%= p.status %>
+                                    </span>
+                                </td>
+
+                                <td class="px-8 py-6">
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="confirmAction('<%= p._id %>', 'Diterima')" class="p-2 bg-emerald-500 text-white rounded-lg hover:scale-110 transition-all shadow-lg shadow-emerald-200" title="Terima">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </button>
+                                        <button onclick="confirmAction('<%= p._id %>', 'Ditolak')" class="p-2 bg-white text-red-500 border border-red-100 rounded-lg hover:bg-red-500 hover:text-white transition-all" title="Tolak">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="4" class="px-8 py-20 text-center text-slate-400 font-bold uppercase text-xs tracking-widest">Belum ada pelamar masuk.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<form id="statusForm" action="/api/lowongan/pendaftaran/status" method="POST" class="hidden">
+    <input type="hidden" name="pendaftaranId" id="formPendaftaranId">
+    <input type="hidden" name="statusBaru" id="formStatusBaru">
+</form>
+
+<script>
+    function confirmAction(id, status) {
+        const isAccept = status === 'Diterima';
+        Swal.fire({
+            title: isAccept ? 'Terima Pelamar?' : 'Tolak Pelamar?',
+            text: `Apakah Anda yakin ingin mengubah status menjadi ${status}?`,
+            icon: isAccept ? 'success' : 'warning',
+            showCancelButton: true,
+            confirmButtonColor: isAccept ? '#10b981' : '#ef4444',
+            confirmButtonText: 'Ya, Proses',
+            cancelButtonText: 'Batal',
+            borderRadius: '2rem'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('formPendaftaranId').value = id;
+                document.getElementById('formStatusBaru').value = status;
+                document.getElementById('statusForm').submit();
+            }
+        });
+    }
+
+    function showProfileModal(userDataRaw) {
+        const user = JSON.parse(userDataRaw.replace(/&quot;/g, '"'));
+        const avatar = (user.foto && user.foto !== 'default-user.png') 
+            ? '/uploads/profile/' + user.foto 
+            : "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.nama) + "&background=7f97d9&color=fff";
+
+        // Filter tampilan Skill: Hanya untuk Siswa
+        let skillHTML = '';
+        if (!user.isGuest) {
+            let skillBadge = '<div class="flex flex-wrap gap-2 mt-2 justify-center">';
+            if (user.skill) {
+                const skills = Array.isArray(user.skill) ? user.skill : user.skill.split(',');
+                skills.forEach(s => {
+                    skillBadge += `<span class="px-3 py-1 bg-slate-100 text-slate-600 text-[10px] font-black rounded-full uppercase">${s.trim()}</span>`;
+                });
+            } else {
+                skillBadge += '<span class="text-slate-400 italic text-xs">Belum ada skill dicantumkan</span>';
+            }
+            skillBadge += '</div>';
+
+            skillHTML = `
+                <div class="bg-slate-50 p-4 rounded-2xl text-center">
+                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-2">Kemampuan / Skill</p>
+                    ${skillBadge}
+                </div>
+            `;
+        }
+
+        // Filter tampilan WhatsApp: Hanya untuk Tamu
+        let contactHTML = `
+            <div class="bg-slate-50 p-3 rounded-2xl text-left">
+                <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Email</p>
+                <p class="text-[11px] font-bold text-slate-700 truncate">${user.email}</p>
+            </div>
+        `;
+
+        if (user.isGuest && user.whatsapp) {
+            contactHTML += `
+                <div class="bg-slate-50 p-3 rounded-2xl text-left">
+                    <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">WhatsApp</p>
+                    <p class="text-[11px] font-bold text-slate-700">${user.whatsapp}</p>
+                </div>
+            `;
+        }
+
+        Swal.fire({
+            html: `
+                <div class="text-center p-2">
+                    <div class="w-24 h-24 mx-auto rounded-[2rem] overflow-hidden shadow-xl mb-4 border-4 border-white">
+                        <img src="${avatar}" class="w-full h-full object-cover">
+                    </div>
+                    <h2 class="text-xl font-black text-slate-800 uppercase">${user.nama}</h2>
+                    <p class="text-[10px] font-black text-[#7f97d9] uppercase tracking-widest mb-4">
+                        ${user.isGuest ? 'Pelamar Umum (External)' : 'Siswa Aktif (NIS: ' + (user.nis || '-') + ')'}
+                    </p>
+                    
+                    <div class="space-y-3">
+                        <div class="grid grid-cols-1 ${user.isGuest ? 'md:grid-cols-2' : ''} gap-3">
+                            ${contactHTML}
+                        </div>
+                        ${skillHTML}
+                    </div>
+
+                    <div class="mt-8">
+                        ${user.cv ? `
+                            <a href="/uploads/cv/${user.cv}" target="_blank" class="flex items-center justify-center gap-3 w-full py-4 bg-slate-900 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-[#7f97d9] transition-all">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Buka Dokumen CV
+                            </a>
+                        ` : `
+                            <div class="py-4 bg-slate-100 text-slate-400 rounded-2xl text-[10px] font-black uppercase tracking-widest">CV Tidak Tersedia</div>
+                        `}
+                    </div>
+                </div>
+            `,
+            showConfirmButton: false,
+            showCloseButton: true,
+            borderRadius: '3rem',
+            width: '450px'
+        });
+    }
+</script>
+
+<%- include('partials/footer') %>

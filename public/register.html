@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SIJA-JOBNET | Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        background-color: #f0f4ff;
+      }
+
+      .mesh-gradient {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        background:
+          radial-gradient(at 0% 0%, #c7d2fe 0px, transparent 50%),
+          radial-gradient(at 100% 0%, #e0e7ff 0px, transparent 50%),
+          radial-gradient(at 100% 100%, #818cf8 0px, transparent 50%),
+          radial-gradient(at 0% 100%, #a5b4fc 0px, transparent 50%),
+          radial-gradient(at 50% 50%, #6366f1 0px, transparent 50%);
+        filter: blur(40px);
+        animation: meshMove 15s ease infinite alternate;
+      }
+
+      @keyframes meshMove {
+        0% {
+          transform: scale(1) rotate(0deg);
+        }
+        50% {
+          transform: scale(1.2) rotate(3deg);
+        }
+        100% {
+          transform: scale(1) rotate(0deg);
+        }
+      }
+
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        z-index: 1;
+        opacity: 0.6;
+        animation: float 20s infinite ease-in-out;
+      }
+
+      .orb-1 {
+        width: 400px;
+        height: 400px;
+        background: #818cf8;
+        top: -10%;
+        left: -10%;
+      }
+      .orb-2 {
+        width: 300px;
+        height: 300px;
+        background: #6366f1;
+        bottom: 10%;
+        right: 10%;
+        animation-delay: -5s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        33% {
+          transform: translate(30px, 50px);
+        }
+        66% {
+          transform: translate(-20px, 20px);
+        }
+      }
+
+      /* Container with Premium Glassmorphism */
+      .container {
+        width: 95%;
+        max-width: 1050px;
+        min-height: 650px; /* Sedikit lebih tinggi untuk form register */
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(25px) saturate(180%);
+        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 32px;
+        display: flex;
+        overflow: hidden;
+        box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        animation: containerEntrance 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      /* ===== LEFT SIDE ===== */
+      .left {
+        width: 42%;
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.85) 0%,
+          rgba(79, 70, 229, 0.9) 100%
+        );
+        color: #fff;
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+      }
+
+      .left img {
+        width: 140px;
+        margin: 0 auto 35px;
+        filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.15));
+        transition: 0.4s;
+      }
+
+      .left h1 {
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1.1;
+        letter-spacing: -1px;
+      }
+
+      .left p {
+        font-size: 15px;
+        line-height: 1.8;
+        opacity: 0.9;
+      }
+
+      .right {
+        width: 58%;
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .right h2 {
+        font-size: 32px;
+        color: #1e1b4b;
+        margin-bottom: 8px;
+        font-weight: 800;
+      }
+
+      .right p.subtitle {
+        font-size: 14px;
+        color: #475569;
+        margin-bottom: 30px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 14px 20px;
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        outline: none;
+        font-size: 14px;
+        transition: 0.3s;
+        background: rgba(255, 255, 255, 0.7);
+        color: #1e293b;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: #6366f1;
+        background: #fff;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+      }
+
+      .btn-signup {
+        margin-top: 10px;
+        padding: 16px;
+        border-radius: 16px;
+        border: none;
+        background: #4f46e5;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+      }
+
+      .btn-signup:hover {
+        background: #4338ca;
+        transform: translateY(-2px);
+        box-shadow: 0 20px 30px -10px rgba(79, 70, 229, 0.5);
+      }
+
+      .login-link {
+        margin-top: 25px;
+        font-size: 14px;
+        text-align: center;
+        color: #64748b;
+      }
+
+      .login-link a {
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      @keyframes containerEntrance {
+        from {
+          opacity: 0;
+          transform: translateY(30px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .container {
+          flex-direction: column;
+          width: 92%;
+          margin: 20px;
+          height: auto;
+        }
+        .left {
+          display: none;
+        } 
+        .right {
+          width: 100%;
+          padding: 40px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="mesh-gradient"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+      <div class="left">
+        <img src="logo stm.png" alt="STM JOB Logo" />
+        <h1>Join with<br />SIJA-JOBNET</h1>
+        <p>
+          Daftarkan dirimu untuk mengakses sistem PKL, magang, dan lowongan
+          kerja resmi secara eksklusif.
+        </p>
+      </div>
+
+      <div class="right">
+        <h2>Sign Up</h2>
+        <p class="subtitle">Lengkapi data untuk membuat akun baru</p>
+
+        <form id="registerForm">
+          <input type="text" name="name" placeholder="Full Name" required />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password (Min. 6 Characters)"
+            required
+            minlength="6"
+          />
+
+          <select name="role" required>
+            <option value="" disabled selected>Register as...</option>
+            <option value="siswa">Siswa (Pencari Kerja/PKL)</option>
+            <option value="perusahaan">Perusahaan (Penyedia Kerja)</option>
+          </select>
+
+          <button class="btn-signup" type="submit">Create Account</button>
+        </form>
+
+        <div class="login-link">
+          Already have an account?
+          <a href="/login">Sign In Here</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const data = Object.fromEntries(formData.entries());
+
+          try {
+            const response = await fetch("/api/login/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+              alert("Registrasi Berhasil! Silakan Sign In.");
+              window.location.href = "/login";
+            } else {
+              alert("Gagal: " + result.message);
+            }
+          } catch (err) {
+            console.error("Fetch Error:", err);
+            alert("Terjadi kesalahan koneksi ke server.");
+          }
+        });
+    </script>
+  </body>
+</html>

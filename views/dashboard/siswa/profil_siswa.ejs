@@ -1,0 +1,218 @@
+<%- include('partials/header', { title: 'Profil Saya - STM JOB', currentPage: 'profile' }) %>
+
+<main class="max-w-4xl mx-auto px-6 py-12">
+    <div class="relative mb-20 md:mb-8">
+        <div class="h-48 bg-gradient-to-r from-[#7f97d9] to-indigo-400 rounded-[3rem] shadow-inner"></div>
+        <div class="absolute -bottom-16 md:-bottom-12 left-6 md:left-10 flex flex-row items-end gap-4 md:gap-6 w-[calc(100%-48px)]">
+            <div class="h-24 w-24 md:h-32 md:w-32 flex-shrink-0 rounded-[2rem] md:rounded-[2.5rem] bg-white p-2 shadow-xl overflow-hidden border-4 border-white">
+                <% 
+                    const avatarDefault = "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name) + "&background=7f97d9&color=fff";
+                    const userPhoto = user.foto && user.foto !== 'default-user.png' ? '/uploads/profile/' + user.foto : avatarDefault;
+                %>
+                <img src="<%= userPhoto %>" onerror="this.src='<%= avatarDefault %>'" class="w-full h-full object-cover rounded-[1.5rem] md:rounded-[2rem]">
+            </div>
+            <div class="mb-4 flex-1 min-w-0">
+                <h1 class="text-xl md:text-3xl font-black text-slate-800 tracking-tight break-words leading-tight uppercase"><%= user.name %></h1>
+                <p class="text-[#7f97d9] font-bold uppercase text-[10px] md:text-xs tracking-[0.2em] mt-1">
+                    NIS: <%= user.nis || 'Belum diatur' %>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-24 md:mt-20 bg-white p-6 md:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-slate-100 shadow-xl">
+        <h3 class="text-lg font-black text-slate-800 tracking-tight mb-8 flex items-center gap-3">
+            <span class="w-2 h-6 bg-[#7f97d9] rounded-full"></span> Lengkapi Profil & Dokumen
+        </h3>
+        
+        <form id="formUpdateProfil" action="/api/siswa/update-profil" method="POST" enctype="multipart/form-data" class="space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-6 rounded-[2rem] border border-slate-100 mb-8">
+                <div>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">NIS (Tetap)</label>
+                    <input type="text" value="<%= user.nis %>" disabled class="w-full mt-2 p-4 bg-slate-200/50 rounded-2xl text-xs font-bold text-slate-500 cursor-not-allowed border-none">
+                </div>
+                <div>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Kelas (Tetap)</label>
+                    <input type="text" value="<%= user.kelas %>" disabled class="w-full mt-2 p-4 bg-slate-200/50 rounded-2xl text-xs font-bold text-slate-500 cursor-not-allowed border-none">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="group">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-[#7f97d9]">Ganti Foto (JPG/PNG)</label>
+                    <input type="file" name="foto" id="inputFoto" accept="image/png, image/jpeg, image/jpg" class="w-full mt-2 p-3 bg-slate-50 border-2 border-slate-100 rounded-2xl text-[10px] font-bold file:bg-[#7f97d9] file:text-white file:border-0 file:rounded-full file:px-4 file:py-1 file:mr-4 file:uppercase file:text-[9px] file:font-black">
+                </div>
+                
+                <div class="group">
+                    <div class="flex justify-between">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-[#7f97d9]">Nama Lengkap</label>
+                        <span id="nameCounter" class="text-[9px] font-bold text-slate-400">0/25</span>
+                    </div>
+                    <input type="text" id="inputNama" name="name" value="<%= user.name %>" required maxlength="25" class="w-full mt-2 p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl text-xs font-bold outline-none focus:border-[#7f97d9] focus:bg-white transition-all">
+                </div>
+
+                <div class="group">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-[#7f97d9]">Email Aktif</label>
+                    <input type="email" name="email" value="<%= user.email %>" required class="w-full mt-2 p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl text-xs font-bold outline-none focus:border-[#7f97d9] focus:bg-white transition-all">
+                </div>
+
+                <div class="group">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-[#7f97d9]">Keahlian (Pisahkan koma)</label>
+                    <% 
+                        let textSkill = "";
+                        if (user.skill && Array.isArray(user.skill)) {
+                            textSkill = user.skill.join(', ');
+                        } else if (user.skill) {
+                            textSkill = user.skill;
+                        }
+                    %>
+                    <input type="text" name="skill" value="<%= textSkill %>" placeholder="Contoh: Web, Excel, Desain" class="w-full mt-2 p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl text-xs font-bold outline-none focus:border-[#7f97d9] focus:bg-white transition-all">
+                </div>
+
+                <div class="md:col-span-2 group">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-[#7f97d9]">Update Dokumen CV (PDF/DOCX)</label>
+                    <div class="mt-2 flex flex-col md:flex-row items-start md:items-center gap-4 p-4 bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl group-focus-within:border-[#7f97d9]/30">
+                        <input type="file" name="cv" id="inputCV" accept=".pdf,.docx" class="text-[10px] font-bold file:bg-slate-800 file:text-white file:border-0 file:rounded-full file:px-4 file:py-1 file:mr-4 flex-1">
+                        <% if(user.cv) { %>
+                            <a href="/uploads/cv/<%= user.cv %>" target="_blank" class="w-full md:w-auto text-center text-[10px] bg-indigo-50 text-indigo-600 px-4 py-2 rounded-full font-black hover:bg-indigo-100 transition-all uppercase flex items-center justify-center gap-2 border border-indigo-100">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+                                Lihat CV Saat Ini
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full py-5 bg-[#7f97d9] text-white rounded-[1.5rem] text-[10px] font-black uppercase tracking-[0.3em] shadow-lg hover:bg-indigo-500 hover:-translate-y-1 active:scale-[0.98] transition-all duration-300">
+                Simpan Perubahan Profil
+            </button>
+        </form>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const formSiswa = document.getElementById('formUpdateProfil');
+    const inputNama = document.getElementById('inputNama');
+    const nameCounter = document.getElementById('nameCounter');
+    const inputFoto = document.getElementById('inputFoto');
+    const inputCV = document.getElementById('inputCV');
+
+    // --- 1. DETEKSI DATA AWAL (Untuk Cek Perubahan) ---
+    const initialData = new FormData(formSiswa);
+    const initialEntries = {};
+    for (let [key, value] of initialData.entries()) {
+        // Jangan simpan data file ke initialEntries
+        if (key !== 'foto' && key !== 'cv') initialEntries[key] = value;
+    }
+
+    // --- 2. NAME COUNTER LOGIC ---
+    if(inputNama) {
+        nameCounter.textContent = `${inputNama.value.length}/25`;
+        inputNama.oninput = () => {
+            nameCounter.textContent = `${inputNama.value.length}/25`;
+        };
+    }
+
+    // --- 3. HANDLING NOTIFIKASI DARI URL ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorMsg = urlParams.get('error');
+    const status = urlParams.get('status');
+
+    if (errorMsg) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal Update',
+            text: errorMsg, 
+            confirmButtonColor: '#7f97d9',
+            borderRadius: '1.5rem'
+        });
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    if (status === 'success') {
+        Swal.fire({ 
+            icon: 'success', 
+            title: 'Berhasil!', 
+            text: 'Profil Anda telah diperbarui.', 
+            timer: 2000, 
+            showConfirmButton: false,
+            borderRadius: '1.5rem'
+        });
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    // --- 4. VALIDASI FILE SISI CLIENT ---
+    if(inputFoto) {
+        inputFoto.addEventListener('change', function() {
+            if (this.files[0]) {
+                const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+                if (!validTypes.includes(this.files[0].type)) {
+                    Swal.fire({ icon: 'error', title: 'Format Salah', text: 'Foto harus berformat JPG atau PNG!', borderRadius: '1.5rem' });
+                    this.value = '';
+                }
+            }
+        });
+    }
+
+    if(inputCV) {
+        inputCV.addEventListener('change', function() {
+            if (this.files[0]) {
+                const fileName = this.files[0].name.toLowerCase();
+                if (!fileName.endsWith('.pdf') && !fileName.endsWith('.docx')) {
+                    Swal.fire({ icon: 'error', title: 'Format Salah', text: 'CV harus berformat PDF atau DOCX!', borderRadius: '1.5rem' });
+                    this.value = '';
+                }
+            }
+        });
+    }
+
+    // --- 5. LOGIC SUBMIT DENGAN CEK PERUBAHAN ---
+    formSiswa.onsubmit = function(e) {
+        e.preventDefault(); // Tahan dulu submitnya
+
+        const currentData = new FormData(formSiswa);
+        let isChanged = false;
+
+        // A. Cek apakah ada file baru yang diupload
+        if (inputFoto.files.length > 0 || inputCV.files.length > 0) {
+            isChanged = true;
+        } else {
+            // B. Cek apakah ada perubahan teks pada input
+            for (let [key, value] of currentData.entries()) {
+                if (key !== 'foto' && key !== 'cv' && value !== initialEntries[key]) {
+                    isChanged = true;
+                    break;
+                }
+            }
+        }
+
+        // Jika tidak ada perubahan sama sekali, munculkan Alert Info
+        if (!isChanged) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Tidak Ada Perubahan',
+                text: 'Anda belum mengubah data apa pun pada profil.',
+                borderRadius: '1.5rem',
+                confirmButtonColor: '#7f97d9'
+            });
+            return false;
+        }
+
+        // Jika ada perubahan, lanjut proses simpan
+        Swal.fire({ 
+            title: 'Sedang Menyimpan...', 
+            text: 'Mohon tunggu sebentar',
+            allowOutsideClick: false, 
+            didOpen: () => { Swal.showLoading(); } 
+        });
+
+        formSiswa.submit();
+    };
+</script>
+
+<%- include('partials/footer') %>

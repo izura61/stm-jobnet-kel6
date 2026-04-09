@@ -1,0 +1,52 @@
+{
+  "name": "smkjob",
+  "version": "1.0.0",
+  "description": "Website Bursa Kerja SMK",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "18": "^0.0.0",
+    "@types/node": "^25.0.10",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.2.2",
+    "connect-mongo": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "ejs": "^4.0.1",
+    "express": "^4.22.1",
+    "express-session": "^1.18.2",
+    "jsonwebtoken": "^9.0.3",
+    "method-override": "^3.0.0",
+    "mongoose": "^9.1.4",
+    "multer": "^2.0.2",
+    "next": "^16.1.4",
+    "node-cron": "^4.2.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.23",
+    "nodemon": "^3.1.11",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/radentaniackl/STM-JOB.git"
+  },
+  "bugs": {
+    "url": "https://github.com/radentaniackl/STM-JOB/issues"
+  },
+  "homepage": "https://github.com/radentaniackl/STM-JOB#readme"
+}

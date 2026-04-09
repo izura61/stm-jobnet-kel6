@@ -1,0 +1,81 @@
+<%- include('partials/header', { currentPage: 'help', title: 'User Help Center - STM JOB' }) %>
+
+<style>
+  body {
+    background: radial-gradient(circle at top, #f7f7f7, #e6e6e6);
+  }
+  .card-help {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .card-help:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(127, 151, 217, 0.2);
+    border-color: #7f97d9;
+  }
+</style>
+
+<main class="max-w-6xl mx-auto px-6 md:px-12 py-16">
+
+  <div class="mb-12">
+    <h1 class="text-4xl font-extrabold text-slate-800 mb-3 tracking-tight">
+      Welcome to <span class="text-[#7f97d9]">User Help Center</span>
+    </h1>
+    <p class="text-slate-500 text-lg">
+      Is there a problem disturbing your experience? We're here to help.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <a href="/dashboard/perusahaan/fya" class="card-help bg-white border border-slate-200 rounded-[2rem] p-8 flex flex-col gap-4">
+      <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-2xl shadow-sm">🔐</div>
+      <div>
+        <h3 class="text-slate-800 font-bold text-lg mb-1">Fix Your Account</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Login failure, account locked, or forgot your password.</p>
+      </div>
+    </a>
+
+    <a href="/dashboard/perusahaan/formal_tech" class="card-help bg-white border border-slate-200 rounded-[2rem] p-8 flex flex-col gap-4">
+      <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-2xl shadow-sm">📄</div>
+      <div>
+        <h3 class="text-slate-800 font-bold text-lg mb-1">Formal & Technical</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Upload failures & technical documentation issues.</p>
+      </div>
+    </a>
+
+    <a href="/dashboard/perusahaan/guide_book" class="card-help bg-white border border-slate-200 rounded-[2rem] p-8 flex flex-col gap-4">
+      <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center text-2xl shadow-sm">📘</div>
+      <div>
+        <h3 class="text-slate-800 font-bold text-lg mb-1">Guide Book</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Detailed company & job posting step-by-step guides.</p>
+      </div>
+    </a>
+
+    <a href="/dashboard/perusahaan/report_penalty" class="card-help bg-white border border-slate-200 rounded-[2rem] p-8 flex flex-col gap-4">
+      <div class="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center text-2xl shadow-sm">⚠️</div>
+      <div>
+        <h3 class="text-slate-800 font-bold text-lg mb-1">Report / Penalty</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Report abuse, bugs, or platform violations.</p>
+      </div>
+    </a>
+
+    <a href="/dashboard/perusahaan/suggestion" class="card-help bg-white border border-slate-200 rounded-[2rem] p-8 flex flex-col gap-4">
+      <div class="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center text-2xl shadow-sm">⚙️</div>
+      <div>
+        <h3 class="text-slate-800 font-bold text-lg mb-1">Suggestion Type</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Your ideas, feedback, and feature improvements.</p>
+      </div>
+    </a>
+
+    <a href="/dashboard/perusahaan/acc_setting" class="card-help bg-white border border-slate-200 rounded-[2rem] p-8 flex flex-col gap-4">
+      <div class="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center text-2xl shadow-sm">👤</div>
+      <div>
+        <h3 class="text-slate-800 font-bold text-lg mb-1">Account Setting</h3>
+        <p class="text-sm text-slate-500 leading-relaxed">Managing your personal data & security settings.</p>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<%- include('partials/footer') %>

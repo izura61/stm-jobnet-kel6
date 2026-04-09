@@ -1,0 +1,117 @@
+<%- include('partials/header') %>
+
+<% if (typeof query !== 'undefined' && (query.status === 'already_applied' || query.status === 'applied' || query.status === 'success_tamu')) { %>
+    <% 
+        const isError = query.status === 'already_applied';
+        const isGuestSuccess = query.status === 'success_tamu';
+        const bgColor = isError ? 'bg-rose-500' : (isGuestSuccess ? 'bg-indigo-600' : 'bg-emerald-500');
+        const shadowColor = isError ? 'shadow-rose-200' : (isGuestSuccess ? 'shadow-indigo-200' : 'shadow-emerald-200');
+        
+        let message = 'Lamaran Berhasil Terkirim!';
+        if (isError) message = 'Anda sudah melamar lowongan ini!';
+        if (isGuestSuccess) message = 'Berhasil! Simpan ID Lamaran Anda.';
+    %>
+    
+    <div id="toast-notif" class="fixed top-10 right-10 z-[100] <%= bgColor %> text-white px-8 py-4 rounded-[2rem] shadow-2xl <%= shadowColor %> flex flex-col gap-1 animate-bounce-subtle">
+        <div class="flex items-center gap-4">
+            <div class="bg-white/20 p-2 rounded-full">
+                <% if (isError) { %>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <% } else { %>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                <% } %>
+            </div>
+            <p class="text-xs font-black uppercase tracking-widest"><%= message %></p>
+        </div>
+        <% if (isGuestSuccess && query.id_lamaran) { %>
+            <p class="text-[10px] font-mono font-bold bg-black/20 p-2 mt-2 rounded-lg break-all text-center">ID: <%= query.id_lamaran %></p>
+        <% } %>
+    </div>
+
+    <script>
+        setTimeout(() => { 
+            const t = document.getElementById('toast-notif');
+            if(t) {
+                t.style.transition = "all 0.5s ease";
+                t.style.opacity = "0";
+                t.style.transform = "translateX(20px)";
+                setTimeout(() => t.remove(), 500);
+            }
+        }, 6000); 
+        const cleanUrl = window.location.pathname + (window.location.search.includes('id=') ? '?id=<%= loker._id %>' : '');
+        window.history.replaceState({}, document.title, cleanUrl);
+    </script>
+<% } %>
+
+<main class="max-w-2xl mx-auto px-6 py-12">
+    <div class="bg-white rounded-[3rem] border border-slate-100 shadow-xl overflow-hidden">
+        <div class="bg-[#7f97d9] p-8 text-white">
+            <h2 class="text-2xl font-black tracking-tight uppercase">Formulir Lamaran</h2>
+            <p class="text-white/80 text-xs font-bold uppercase tracking-widest mt-1">Loker: <%= loker.posisi || loker.judul %></p>
+        </div>
+
+        <div class="p-10">
+            <% if (typeof sudahDaftar !== 'undefined' && sudahDaftar && user.role !== 'tamu') { %>
+                <div class="bg-rose-50 border-2 border-rose-100 rounded-[2rem] p-8 text-center">
+                    <div class="w-16 h-16 bg-rose-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg rotate-3">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-black text-rose-600 tracking-tight uppercase">Akses Dibatasi</h3>
+                    <p class="text-xs text-slate-500 mt-2 font-medium leading-relaxed">
+                        Anda sudah melamar posisi ini. <br>Satu akun hanya diperbolehkan melamar satu kali per lowongan.
+                    </p>
+                    <div class="mt-6">
+                        <a href="/dashboard/siswa/lamaran" class="inline-block px-8 py-4 bg-slate-800 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all">
+                            Cek Riwayat Lamaran
+                        </a>
+                    </div>
+                </div>
+            <% } else { %>
+                <form action="/api/lowongan/daftar" method="POST" class="space-y-6">
+                    <input type="hidden" name="lowonganId" value="<%= loker._id %>">
+                    
+                    <% if (user && user.role === 'tamu') { %>
+                        <div class="space-y-4 mb-6">
+                            <div class="bg-amber-50 border border-amber-100 p-4 rounded-2xl mb-6 text-center text-amber-700">
+                                <p class="text-[10px] font-black uppercase tracking-widest">Pendaftaran Jalur Tamu</p>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Nama Lengkap Anda</label>
+                                <input type="text" name="namaTamu" required placeholder="Masukkan Nama Sesuai KTP" 
+                                    class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-slate-700 transition-all">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Email Aktif</label>
+                                <input type="email" name="emailTamu" required placeholder="email@anda.com" 
+                                    class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-slate-700 transition-all">
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-2xl">
+                                <p class="text-[10px] text-orange-500 font-bold leading-relaxed uppercase tracking-tighter italic">
+                                    * PENTING: Harap simpan ID Pendaftaran yang akan muncul untuk mengecek status lamaran Anda nanti.
+                                </p>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-[2rem] p-8 text-center mb-6">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Pendaftar Terverifikasi</p>
+                            <h3 class="text-xl font-black text-slate-800 tracking-tight"><%= user.name %></h3>
+                            <p class="text-xs text-slate-500 mt-3 italic">"Klik tombol di bawah untuk mengirim CV Digital Anda."</p>
+                        </div>
+                    <% } %>
+
+                    <button type="submit" class="w-full py-5 bg-[#7f97d9] hover:bg-[#6b82c1] text-white rounded-[1.5rem] text-[10px] font-black uppercase tracking-[0.3em] shadow-lg transition-all hover:-translate-y-1 active:scale-95">
+                        Konfirmasi & Kirim Lamaran
+                    </button>
+                </form>
+            <% } %>
+
+            <div class="mt-8 text-center">
+                <a href="javascript:history.back()" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-[#7f97d9] transition-all">
+                    ← Kembali
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

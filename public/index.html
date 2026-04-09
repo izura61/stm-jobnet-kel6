@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIJA-JOBNET | Portal Karier SMKN 1 Cimahi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap");
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      .carousel-item {
+        display: none;
+        transition: opacity 1s ease-in-out;
+      }
+      .carousel-item.active {
+        display: block;
+        opacity: 1;
+      }
+
+      .text-gradient {
+        background: linear-gradient(90deg, #2563eb, #7c3aed);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+
+      .glass-box {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-800">
+    <nav
+      class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex justify-between items-center"
+    >
+      <div class="flex items-center gap-3">
+        <img
+          src="images/LOGO-STM.png"
+          class="w-10 h-10 object-contain"
+          alt="Logo"
+        />
+        <h1 class="text-2xl font-black tracking-tighter text-blue-600">
+          SIJA<span class="text-slate-800">-JOBNET</span>
+        </h1>
+      </div>
+      <ul
+        class="hidden md:flex gap-8 font-semibold text-sm uppercase tracking-wider"
+      >
+        <li><a href="#" class="hover:text-blue-600 transition">Home</a></li>
+        <li>
+          <a href="#fitur" class="hover:text-blue-600 transition">Fitur</a>
+        </li>
+        <li>
+          <a href="#program" class="hover:text-blue-600 transition">Jurusan</a>
+        </li>
+        <li>
+          <a href="#team" class="hover:text-blue-600 transition">Tim Kami</a>
+        </li>
+      </ul>
+      <a
+        href="/login"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-blue-200 transition-all active:scale-95"
+        >Login</a
+      >
+    </nav>
+
+    <section class="relative w-full h-[550px] overflow-hidden bg-slate-900">
+      <div
+        class="absolute inset-0 z-10 bg-black/50 flex items-center px-6 lg:px-20"
+      >
+        <div class="max-w-3xl text-white space-y-6">
+          <h2 class="text-5xl md:text-6xl font-extrabold leading-tight">
+            Satu Platform Untuk
+            <span class="text-blue-400 italic">Masa Depanmu.</span>
+          </h2>
+          <p class="text-lg text-slate-200">
+            STM-JOB menghubungkan ribuan alumni dan siswa SMKN 1 Cimahi dengan
+            peluang kerja terbaik di industri Manufaktur, IT, hingga Seni
+            Kreatif.
+          </p>
+          <div class="flex gap-4">
+            <a
+              href="#fitur"
+              class="bg-blue-600 px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition"
+              >Mulai Jelajahi</a
+            >
+            <a
+              href="./about.html"
+              class="bg-white/10 backdrop-blur-sm border border-white/20 px-8 py-3 rounded-full font-bold hover:bg-white/20 transition"
+              >Tentang Kami</a
+            >
+          </div>
+        </div>
+      </div>
+      <img
+        src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
+        class="carousel-item active w-full h-full object-cover"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1519389950473-47ba0277781c"
+        class="carousel-item w-full h-full object-cover"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1581092160562-40aa08e78837"
+        class="carousel-item w-full h-full object-cover"
+      />
+    </section>
+
+    <section
+      id="fitur"
+      class="py-24 px-6 max-w-7xl mx-auto -mt-20 relative z-20"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          class="reveal bg-white p-8 rounded-[2.5rem] shadow-2xl border-b-8 border-blue-600"
+        >
+          <div
+            class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 text-2xl shadow-inner"
+          >
+            <i class="fas fa-user-graduate"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Akses Siswa</h3>
+          <p class="text-slate-500 text-sm leading-relaxed mb-4">
+            Lamar pekerjaan sesuai jurusanmu, upload portofolio, dan pantau
+            status lamaran secara real-time.
+          </p>
+          <span
+            class="text-[10px] font-extrabold bg-blue-50 text-blue-600 px-3 py-1 rounded-full uppercase"
+            >Karier Terfokus</span
+          >
+        </div>
+        <div
+          class="reveal bg-white p-8 rounded-[2.5rem] shadow-2xl border-b-8 border-indigo-600"
+        >
+          <div
+            class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 text-2xl shadow-inner"
+          >
+            <i class="fas fa-building"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Untuk Perusahaan</h3>
+          <p class="text-slate-500 text-sm leading-relaxed mb-4">
+            Temukan talenta muda berbakat dari SMKN 1 Cimahi. Rekrutmen lebih
+            cepat dan tepat sasaran.
+          </p>
+          <span
+            class="text-[10px] font-extrabold bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full uppercase"
+            >Talenta Terverifikasi</span
+          >
+        </div>
+        <div
+          class="reveal bg-white p-8 rounded-[2.5rem] shadow-2xl border-b-8 border-purple-600"
+        >
+          <div
+            class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6 text-2xl shadow-inner"
+          >
+            <i class="fas fa-globe"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Akses Tamu</h3>
+          <p class="text-slate-500 text-sm leading-relaxed mb-4">
+            Bukan siswa SMKN 1 Cimahi? Kamu tetap bisa melihat kesempatan karier
+            umum dan tren industri terkini.
+          </p>
+          <span
+            class="text-[10px] font-extrabold bg-purple-50 text-purple-600 px-3 py-1 rounded-full uppercase"
+            >Akses Luas</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <section id="program" class="py-20 px-6 max-w-7xl mx-auto">
+      <div class="text-center mb-16 space-y-4">
+        <h2 class="text-4xl font-black text-slate-900 tracking-tight">
+          Eksplorasi Program Keahlian
+        </h2>
+        <p class="text-slate-500 font-medium">
+          Teknologi Manufaktur dan Rekayasa & Konsentrasi Unggulan
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div
+          class="reveal glass-box p-8 rounded-3xl hover:-translate-y-3 transition-all duration-300 border-t-8 border-blue-600 shadow-xl shadow-blue-100"
+        >
+          <h3
+            class="font-bold text-blue-600 text-sm uppercase mb-6 tracking-widest text-center border-b pb-4"
+          >
+            1. Teknik Elektronika
+          </h3>
+          <ul class="space-y-3">
+            <li
+              class="flex items-center gap-2 text-xs font-semibold text-slate-600"
+            >
+              <i class="fas fa-check text-blue-500"></i> Mekatronika
+            </li>
+            <li
+              class="flex items-center gap-2 text-xs font-semibold text-slate-600"
+            >
+              <i class="fas fa-check text-blue-500"></i> Elektronika Industri
+            </li>
+            <li
+              class="flex items-center gap-2 text-xs font-semibold text-slate-600"
+            >
+              <i class="fas fa-check text-blue-500"></i> Otomasi Industri
+            </li>
+            <li
+              class="flex items-center gap-2 text-xs font-semibold text-slate-600"
+            >
+              <i class="fas fa-check text-blue-500"></i> Elektronika Komunikasi
+            </li>
+            <li
+              class="mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 p-3 rounded-xl text-[10px] font-bold text-white text-center shadow-lg"
+            >
+              Instrumentasi & Otomatisasi (4 Thn)
+            </li>
+          </ul>
+        </div>
+        <div
+          class="reveal glass-box p-8 rounded-3xl hover:-translate-y-3 transition-all duration-300 border-t-8 border-orange-500 shadow-xl shadow-orange-100"
+        >
+          <h3
+            class="font-bold text-orange-600 text-sm uppercase mb-6 tracking-widest text-center border-b pb-4"
+          >
+            2. Energi & Pertambangan
+          </h3>
+          <div class="space-y-4">
+            <p class="text-xs font-bold text-slate-700 leading-relaxed">
+              Teknik Pemanasan, Tata Udara, dan Pendinginan (HVAC)
+            </p>
+            <div
+              class="bg-orange-50 text-orange-600 py-2 rounded-lg text-center font-black text-[10px]"
+            >
+              DURASI: 3 TAHUN
+            </div>
+          </div>
+        </div>
+        <div
+          class="reveal glass-box p-8 rounded-3xl hover:-translate-y-3 transition-all duration-300 border-t-8 border-indigo-600 shadow-xl shadow-indigo-100"
+        >
+          <h3
+            class="font-bold text-indigo-600 text-sm uppercase mb-6 tracking-widest text-center border-b pb-4"
+          >
+            3. Teknologi Informasi
+          </h3>
+          <ul class="space-y-3">
+            <li
+              class="flex items-center gap-2 text-xs font-semibold text-slate-600"
+            >
+              <i class="fas fa-code text-indigo-500"></i> Rekayasa Perangkat
+              Lunak
+            </li>
+            <li
+              class="mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 p-3 rounded-xl text-[10px] font-bold text-white text-center shadow-lg uppercase tracking-wider"
+            >
+              SIJA (4 TAHUN)
+            </li>
+          </ul>
+        </div>
+        <div
+          class="reveal glass-box p-8 rounded-3xl hover:-translate-y-3 transition-all duration-300 border-t-8 border-purple-500 shadow-xl shadow-purple-100"
+        >
+          <h3
+            class="font-bold text-purple-600 text-sm uppercase mb-6 tracking-widest text-center border-b pb-4"
+          >
+            4. Seni Kreatif
+          </h3>
+          <div class="space-y-4">
+            <p
+              class="text-xs font-bold text-slate-700 leading-relaxed uppercase"
+            >
+              Broadcasting & Perfilman
+            </p>
+            <p class="text-[11px] text-slate-500 italic">
+              Produksi dan Siaran Program Televisi
+            </p>
+            <div
+              class="bg-purple-50 text-purple-600 py-2 rounded-lg text-center font-black text-[10px]"
+            >
+              DURASI: 3 TAHUN
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-24 bg-blue-600 text-white overflow-hidden relative">
+      <div class="absolute right-0 top-0 opacity-10">
+        <i class="fas fa-rocket text-[20rem]"></i>
+      </div>
+      <div
+        class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center"
+      >
+        <div class="reveal space-y-8">
+          <h2 class="text-4xl font-black italic tracking-tighter uppercase">
+            Keunggulan STM-JOB
+          </h2>
+          <div class="space-y-6">
+            <div class="flex gap-4 items-start">
+              <div class="bg-white/20 p-3 rounded-xl">
+                <i class="fas fa-check-double"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-xl">Filter Jurusan Presisi</h4>
+                <p class="text-blue-100 text-sm">
+                  Lowongan kerja yang muncul akan otomatis menyesuaikan dengan
+                  keahlian teknis kamu di sekolah.
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start">
+              <div class="bg-white/20 p-3 rounded-xl">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-xl">Koneksi Industri Resmi</h4>
+                <p class="text-blue-100 text-sm">
+                  Bekerja sama langsung dengan ratusan perusahaan mitra BKK SMKN
+                  1 Cimahi.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="reveal bg-white/10 backdrop-blur-md p-10 rounded-[3rem] border border-white/20"
+        >
+          <h3 class="text-2xl font-bold mb-4">Akses Lowongan Luas</h3>
+          <p class="text-blue-50 leading-relaxed mb-6 italic">
+            "Mempermudah alumni dalam mendapatkan pekerjaan pertama mereka
+            dengan sistem verifikasi yang terjamin keamanannya."
+          </p>
+          <div class="flex items-center gap-4">
+            <div class="h-1 flex-1 bg-white/30 rounded-full"></div>
+            <i class="fas fa-star text-yellow-300"></i>
+            <div class="h-1 flex-1 bg-white/30 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="team" class="py-24 bg-white px-6">
+      <div class="text-center mb-20 space-y-2">
+        <h2 class="text-4xl font-black text-slate-900">TIM PENGEMBANG</h2>
+        <p class="text-blue-600 font-bold uppercase tracking-[0.3em] text-sm">
+          XII SIJA A - SMKN 1 CIMAHI
+        </p>
+      </div>
+      <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
+        <div class="reveal group text-center">
+          <div
+            class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-[2rem] bg-slate-100 mb-6 overflow-hidden border-4 border-transparent group-hover:border-blue-600 transition-all shadow-xl rotate-3 group-hover:rotate-0"
+          >
+            <img
+              src="images/filipus.jpeg"
+              alt="Filipus"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h4 class="text-xl font-black text-slate-800">FILIPUS</h4>
+          <p class="text-xs font-bold text-blue-500 uppercase tracking-widest">
+            UI/UX Designer
+          </p>
+        </div>
+        <div class="reveal group text-center">
+          <div
+            class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-[2rem] bg-slate-100 mb-6 overflow-hidden border-4 border-transparent group-hover:border-pink-500 transition-all shadow-xl -rotate-3 group-hover:rotate-0"
+          >
+            <img
+              src="images/naura.jpeg"
+              alt="Naura"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h4 class="text-xl font-black text-slate-800">NAURA</h4>
+          <p class="text-xs font-bold text-pink-500 uppercase tracking-widest">
+            Front End Developer
+          </p>
+        </div>
+        <div class="reveal group text-center">
+          <div
+            class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-[2rem] bg-slate-100 mb-6 overflow-hidden border-4 border-transparent group-hover:border-purple-600 transition-all shadow-xl rotate-3 group-hover:rotate-0"
+          >
+            <img
+              src="images/raden.jpeg"
+              alt="Tania"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h4 class="text-xl font-black text-slate-800">TANIA</h4>
+          <p
+            class="text-xs font-bold text-purple-600 uppercase tracking-widest"
+          >
+            Backend Dev
+          </p>
+        </div>
+        <div class="reveal group text-center">
+          <div
+            class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-[2rem] bg-slate-100 mb-6 overflow-hidden border-4 border-transparent group-hover:border-indigo-600 transition-all shadow-xl -rotate-3 group-hover:rotate-0"
+          >
+            <img
+              src="images/rizki.jpeg"
+              alt="Rizki"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h4 class="text-xl font-black text-slate-800">RIZKY</h4>
+          <p
+            class="text-xs font-bold text-indigo-600 uppercase tracking-widest"
+          >
+            UI/UX Designer
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-400 p-12 lg:p-20">
+      <div
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16"
+      >
+        <div class="space-y-6">
+          <div class="flex items-center gap-3 opacity-80">
+            <img
+              src="images/LOGO-STM.png"
+              class="w-12 h-12 object-contain grayscale invert"
+              alt="Logo"
+            />
+            <h1 class="font-bold text-white text-xl uppercase tracking-widest">
+              STM-JOB
+            </h1>
+          </div>
+
+          <p class="text-sm leading-relaxed">
+            Platform Karier Eksklusif untuk mencetak SDM unggul dari SMKN 1
+            Cimahi untuk Dunia Industri Global.
+          </p>
+        </div>
+        <div class="space-y-6">
+          <h3 class="font-bold text-white text-xl uppercase tracking-widest">
+            Hubungi Kami
+          </h3>
+          <ul class="space-y-4 text-sm">
+            <li class="flex items-center gap-3">
+              <i class="fas fa-envelope text-blue-500"></i> info@stmjob.id
+            </li>
+            <li class="flex items-center gap-3">
+              <i class="fas fa-phone text-blue-500"></i> 081298765372
+            </li>
+            <li class="flex items-center gap-3">
+              <i class="fas fa-map-marker-alt text-blue-500"></i> Jl. Mahar
+              Martanegara No.48, Cimahi
+            </li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <h3 class="font-bold text-white text-xl uppercase tracking-widest">
+            Lokasi Sekolah
+          </h3>
+          <div
+            class="rounded-3xl overflow-hidden shadow-2xl h-44 border-4 border-white/5"
+          >
+            <iframe
+              class="w-full h-full border-none grayscale opacity-70 hover:opacity-100 transition duration-500"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.0374169963243!2d107.5543419!3d-6.8860431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e4407336e761%3A0xc34a17926b47c05b!2sSMK%20Negeri%201%20Cimahi!5e0!3m2!1sid!2sid!4v1700000000000"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="mt-20 pt-8 border-t border-slate-800 text-center">
+        <p
+          class="text-[10px] font-bold tracking-[0.5em] uppercase text-slate-500"
+        >
+          © 2026 STM-JOB | Created with Proud by XII SIJA A - SMKN 1 CIMAHI
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Carousel Auto-Slide
+      let index = 0;
+      const items = document.querySelectorAll(".carousel-item");
+      setInterval(() => {
+        items[index].classList.remove("active");
+        index = (index + 1) % items.length;
+        items[index].classList.add("active");
+      }, 5000);
+
+      // Scroll Reveal Initializer
+      ScrollReveal().reveal(".reveal", {
+        delay: 200,
+        distance: "60px",
+        origin: "bottom",
+        duration: 1000,
+        interval: 150,
+        rotate: { x: 0, y: 10, z: 0 },
+      });
+    </script>
+  </body>
+</html>

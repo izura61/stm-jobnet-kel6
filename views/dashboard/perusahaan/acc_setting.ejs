@@ -1,0 +1,79 @@
+<%- include('partials/header', { currentPage: 'help', title: 'Account Settings - Help Center' }) %>
+
+<style>
+    body {
+        background: radial-gradient(circle at top, #f7f7f7, #e6e6e6);
+    }
+    .setting-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .setting-card:hover {
+        transform: translateY(-5px);
+        border-color: #7f97d9;
+        box-shadow: 0 10px 25px -5px rgba(127, 151, 217, 0.1);
+    }
+</style>
+
+<main class="max-w-5xl mx-auto px-6 py-16">
+    
+    <div class="mb-12">
+        <nav class="flex mb-4 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <a href="/dashboard/perusahaan/help" class="hover:text-[#7f97d9]">Help Center</a>
+            <span class="mx-2">/</span>
+            <span class="text-slate-600">Account Settings</span>
+        </nav>
+        <h1 class="text-4xl font-black text-slate-800 mb-2 tracking-tight">Account Settings</h1>
+        <p class="text-slate-500 font-medium">Manage your personal information and security preferences.</p>
+    </div>
+
+    <div class="grid gap-6">
+
+        <div class="setting-card bg-white border border-slate-200 rounded-[2.5rem] p-6 md:p-8 flex flex-col md:flex-row items-center gap-8 shadow-sm">
+            <div class="w-32 h-32 md:w-44 md:h-44 flex-shrink-0 bg-blue-50/50 rounded-3xl overflow-hidden p-4">
+                <img src="/images/changeprof.png" alt="Change Profile" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-2">Change Profile</h3>
+                <p class="text-slate-500 leading-relaxed max-w-xl">
+                    Update data perusahaan Anda seperti nama, alamat, deskripsi, hingga logo terbaru agar terlihat lebih profesional bagi pelamar.
+                </p>
+                <a href="/dashboard/perusahaan" class="inline-block mt-5 px-6 py-2 bg-[#7f97d9] text-white text-xs font-bold rounded-full hover:bg-[#6b85cc] transition-colors">
+                    GO TO DASHBOARD
+                </a>
+            </div>
+        </div>
+
+        <div class="setting-card bg-white border border-slate-200 rounded-[2.5rem] p-6 md:p-8 flex flex-col md:flex-row items-center gap-8 shadow-sm">
+            <div class="w-32 h-32 md:w-44 md:h-44 flex-shrink-0 bg-amber-50/50 rounded-3xl overflow-hidden p-4">
+                <img src="/images/changepass.png" alt="Change Password" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6195/6195700.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-2">Change Password</h3>
+                <p class="text-slate-500 leading-relaxed max-w-xl">
+                    Jaga keamanan akun Anda dengan memperbarui kata sandi secara berkala. Pastikan menggunakan kombinasi karakter yang kuat.
+                </p>
+                <a href="/dashboard/perusahaan/fya" class="inline-block mt-5 px-6 py-2 border border-[#7f97d9] text-[#7f97d9] text-xs font-bold rounded-full hover:bg-slate-50 transition-colors">
+                    TROUBLESHOOTING
+                </a>
+            </div>
+        </div>
+
+        <div class="setting-card bg-white border border-slate-200 rounded-[2.5rem] p-6 md:p-8 flex flex-col md:flex-row items-center gap-8 shadow-sm">
+            <div class="w-32 h-32 md:w-44 md:h-44 flex-shrink-0 bg-red-50/50 rounded-3xl overflow-hidden p-4">
+                <img src="/images/logout.png" alt="Log Out" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4400/4400828.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-2">Log Out</h3>
+                <p class="text-slate-500 leading-relaxed max-w-xl">
+                    Keluar dari sesi saat ini untuk menjaga privasi akun Anda, terutama jika Anda sedang menggunakan perangkat publik.
+                </p>
+                <a href="/logout" class="inline-block mt-5 px-6 py-2 bg-red-500 text-white text-xs font-bold rounded-full hover:bg-red-600 transition-colors">
+                    SIGN OUT NOW
+                </a>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<%- include('partials/footer') %>

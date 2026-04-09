@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajah Lowongan | STM JOB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img src="/images/LOGO-STM.png" class="h-10 w-auto" alt="Logo">
+                <span class="font-black text-xl tracking-tighter text-[#7f97d9]">STM JOB</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/login" class="text-sm font-bold text-slate-600 hover:text-[#7f97d9] transition-all">Masuk</a>
+                <a href="/tamu/cek-status" class="bg-slate-100 text-slate-700 px-5 py-2.5 rounded-full text-sm font-bold hover:bg-slate-200 transition-all">Cek Lamaran Tamu</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-16 px-6 max-w-7xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+            Temukan Karir <span class="text-[#7f97d9]">Impianmu</span>
+        </h1>
+        <p class="mt-4 text-slate-500 font-medium max-w-2xl">
+            Jelajahi berbagai peluang kerja dari mitra industri terpercaya SMKN 1 Cimahi. 
+            Terbuka untuk Siswa dan Pengunjung Umum (Tamu).
+        </p>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pb-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <% if (listLowongan && listLowongan.length > 0) { %>
+                <% listLowongan.forEach(loker => { %>
+                    <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-start justify-between mb-6">
+                                <div class="h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center overflow-hidden border border-slate-100">
+                                    <img src="/uploads/logos/<%= loker.perusahaan.logo %>" 
+                                         onerror="this.src='https://ui-avatars.com/api/?name=<%= loker.perusahaan.name %>'" 
+                                         class="w-full h-full object-cover">
+                                </div>
+                                <span class="bg-[#7f97d9]/10 text-[#7f97d9] px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
+                                    <%= loker.tipe %>
+                                </span>
+                            </div>
+
+                            <h3 class="text-xl font-bold text-slate-800 mb-1 leading-tight"><%= loker.judul %></h3>
+                            <p class="text-sm font-semibold text-slate-400 mb-4"><%= loker.perusahaan.name %></p>
+                            
+                            <div class="space-y-3 mb-8">
+                                <div class="flex items-center gap-3 text-slate-500 text-sm font-medium">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                    <%= loker.lokasi %>
+                                </div>
+                                <div class="flex items-center gap-3 text-slate-500 text-sm font-medium">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <%= loker.gaji %>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="/api/lowongan/form-daftar?id=<%= loker._id %>" 
+                           class="w-full bg-slate-900 text-white text-center py-4 rounded-2xl font-bold hover:bg-[#7f97d9] shadow-lg shadow-slate-200 transition-all">
+                            Lihat & Lamar
+                        </a>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="col-span-full py-20 text-center">
+                    <p class="text-slate-400 font-bold uppercase tracking-widest">Belum ada lowongan aktif saat ini</p>
+                </div>
+            <% } %>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-slate-100 py-12 px-6 text-center">
+        <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">© 2026 STM JOB PORTAL - SMKN 1 CIMAHI</p>
+    </footer>
+
+    <script>
+        // Mengambil parameter dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        const idLamaran = urlParams.get('id_lamaran');
+
+        if (status === 'success_tamu' && idLamaran) {
+            Swal.fire({
+                title: 'Berhasil Terkirim!',
+                html: `
+                    <div class="text-left bg-slate-50 p-4 rounded-2xl border border-slate-200 mt-4">
+                        <p class="text-xs font-black text-[#7f97d9] uppercase tracking-widest mb-2">ID Pendaftaran Anda:</p>
+                        <div class="flex items-center justify-between bg-white p-3 rounded-xl border border-slate-100">
+                            <code id="kodeID" class="font-mono font-bold text-slate-700">${idLamaran}</code>
+                            <button onclick="copyID()" class="text-[10px] bg-slate-900 text-white px-3 py-1 rounded-lg font-bold">Salin</button>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-4 leading-relaxed font-bold italic">
+                            * Simpan ID ini untuk mengecek status lamaran Anda di menu "Cek Lamaran Tamu".
+                        </p>
+                    </div>
+                `,
+                icon: 'success',
+                confirmButtonText: 'Saya Sudah Simpan',
+                confirmButtonColor: '#7f97d9',
+                allowOutsideClick: false
+            });
+        }
+
+        function copyID() {
+            const copyText = document.getElementById("kodeID").innerText;
+            navigator.clipboard.writeText(copyText);
+            Swal.showValidationMessage('ID Berhasil disalin ke clipboard!');
+            setTimeout(() => { Swal.resetValidationMessage(); }, 2000);
+        }
+    </script>
+</body>
+</html>

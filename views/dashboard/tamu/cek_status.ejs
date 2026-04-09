@@ -1,0 +1,77 @@
+<%- include('partials/header') %>
+
+<main class="max-w-2xl mx-auto px-6 py-16">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-black text-slate-800 tracking-tighter uppercase">Lacak Lamaran</h2>
+        <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">Masukkan ID Pendaftaran yang Anda dapatkan saat melamar</p>
+    </div>
+
+    <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 mb-8">
+        <form action="/status-lamaran-tamu/cari" method="POST" class="flex flex-col sm:flex-row gap-4">
+            <input type="text" name="pendaftaranId" required placeholder="Contoh: 65cb..." 
+                class="flex-1 p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-[#7f97d9] font-mono text-sm font-bold transition-all">
+            <button type="submit" class="bg-[#7f97d9] text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg">
+                Cek Status
+            </button>
+        </form>
+    </div>
+
+    <% if (hasil === "not_found") { %>
+        <div class="bg-rose-50 border-2 border-rose-100 p-8 rounded-[2rem] text-center animate-shake">
+            <p class="text-rose-600 font-black text-xs uppercase tracking-widest">ID Tidak Ditemukan</p>
+            <p class="text-slate-500 text-[10px] mt-2 italic">Pastikan ID yang Anda masukkan benar (Case Sensitive)</p>
+        </div>
+    <% } else if (hasil) { %>
+        <div class="bg-white border border-slate-100 rounded-[3rem] shadow-2xl overflow-hidden animate-fade-in-up">
+            <div class="p-8 border-b border-slate-50">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Posisi Dilamar</p>
+                        <h3 class="text-xl font-black text-slate-800 tracking-tight"><%= hasil.lowongan ? hasil.lowongan.judul : 'Posisi tidak tersedia' %></h3>
+                        <p class="text-xs font-bold text-[#7f97d9] mt-1"><%= (hasil.lowongan && hasil.lowongan.perusahaan) ? hasil.lowongan.perusahaan.name : 'Perusahaan' %></p>
+                    </div>
+                    
+                    <% 
+                        let statusColor = "bg-amber-100 text-amber-600";
+                        if(hasil.status === 'Diterima') statusColor = "bg-emerald-100 text-emerald-600";
+                        if(hasil.status === 'Ditolak') statusColor = "bg-rose-100 text-rose-600";
+                    %>
+                    <span class="<%= statusColor %> px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest">
+                        <%= hasil.status %>
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-6 rounded-2xl">
+                    <div>
+                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Nama Pelamar</p>
+                        <p class="text-xs font-bold text-slate-700"><%= (hasil.tamu && hasil.tamu.nama) ? hasil.tamu.nama : 'Data Kosong' %></p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Nomor WhatsApp</p>
+                        <p class="text-xs font-bold text-slate-700"><%= (hasil.tamu && hasil.tamu.whatsapp) ? hasil.tamu.whatsapp : '-' %></p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Email</p>
+                        <p class="text-xs font-bold text-slate-700"><%= (hasil.tamu && hasil.tamu.email) ? hasil.tamu.email : '-' %></p>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Tanggal Daftar</p>
+                        <p class="text-xs font-bold text-slate-700"><%= new Date(hasil.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) %></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-6 bg-slate-50/50 text-center">
+                <% if(hasil.status === 'Pending') { %>
+                    <p class="text-[10px] text-slate-500 font-medium italic">"Lamaran Anda sedang ditinjau oleh HRD. Harap cek secara berkala."</p>
+                <% } else if(hasil.status === 'Diterima') { %>
+                    <p class="text-[10px] text-emerald-600 font-bold uppercase tracking-tight">"Selamat! Perusahaan akan menghubungi WhatsApp/Email Anda segera."</p>
+                <% } else { %>
+                    <p class="text-[10px] text-rose-400 font-medium italic">"Terima kasih telah melamar. Tetap semangat mencari peluang lain!"</p>
+                <% } %>
+            </div>
+        </div>
+    <% } %>
+</main>
+
+<%- include('partials/footer') %>

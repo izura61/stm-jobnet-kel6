@@ -1,0 +1,68 @@
+<%- include('partials/header') %>
+
+<main class="relative z-10 max-w-3xl mx-auto px-6 py-20">
+    <div class="text-center mb-12">
+        <span class="px-4 py-1 bg-indigo-50 text-[#7f97d9] text-[10px] font-black uppercase tracking-widest rounded-full">Proses Lamaran</span>
+        <h1 class="text-3xl font-black text-slate-800 mt-4 tracking-tight">Formulir Pendaftaran</h1>
+        <p class="text-slate-500 font-medium">Anda melamar untuk posisi: <span class="text-[#7f97d9] font-black italic"><%= loker.judul %></span></p>
+    </div>
+
+    <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-2xl shadow-slate-200/50">
+        <form action="/tamu/apply" method="POST" enctype="multipart/form-data" class="space-y-6">
+            <input type="hidden" name="lowonganId" value="<%= loker._id %>">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase text-slate-400 ml-4">Nama Lengkap</label>
+                    <input type="text" name="nama" required 
+                        class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none ring-1 ring-slate-100 focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-sm text-slate-700">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase text-slate-400 ml-4">Email Aktif</label>
+                    <input type="email" name="email" required 
+                        class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none ring-1 ring-slate-100 focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-sm text-slate-700">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-black uppercase text-slate-400 ml-4">Nomor WhatsApp</label>
+                <input type="tel" name="whatsapp" placeholder="08..." required 
+                    class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none ring-1 ring-slate-100 focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-sm text-slate-700">
+            </div>
+
+            <div class="relative p-8 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200 group hover:border-[#7f97d9] transition-all text-center">
+                <input type="file" name="cv" id="cv-upload" accept=".pdf" required 
+                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                
+                <div class="relative z-10 pointer-events-none">
+                    <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Upload CV (PDF)</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-slate-300 group-hover:text-[#7f97d9] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <div id="file-label-text" class="text-[#7f97d9] font-black text-xs uppercase underline">Klik untuk pilih file</div>
+                    <p id="file-name-display" class="mt-2 text-[10px] text-slate-600 font-bold"></p>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full py-5 bg-[#7f97d9] text-white rounded-[2rem] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-slate-800 transition-all active:scale-95">
+                Kirim Lamaran Sekarang
+            </button>
+        </form>
+    </div>
+</main>
+
+<script>
+    // Script untuk menampilkan nama file setelah dipilih
+    const fileInput = document.getElementById('cv-upload');
+    const fileNameDisplay = document.getElementById('file-name-display');
+    const labelText = document.getElementById('file-label-text');
+
+    fileInput.addEventListener('change', function() {
+        if (this.files && this.files.length > 0) {
+            fileNameDisplay.innerText = "File terpilih: " + this.files[0].name;
+            labelText.innerText = "Ganti file";
+        }
+    });
+</script>
+
+<%- include('partials/footer') %>

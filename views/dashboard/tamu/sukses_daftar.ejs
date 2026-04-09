@@ -1,0 +1,69 @@
+<%- include('partials/header', { title: 'Lamaran Terkirim - STM JOB', currentPage: 'explore' }) %>
+
+<main class="max-w-4xl mx-auto px-6 py-20 text-center">
+    <div class="mb-8 relative inline-block">
+        <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+            <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+        <div class="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white"></div>
+    </div>
+
+    <h1 class="text-4xl font-black text-slate-800 mb-4 tracking-tight">Lamaran Berhasil Terkirim!</h1>
+    <p class="text-slate-500 text-lg mb-10 font-medium">
+        Halo <span class="text-[#7f97d9] font-bold"><%= nama %></span>, lamaranmu sedang diproses oleh perusahaan. <br>
+        Simpan ID Pendaftaran di bawah ini untuk mengecek status lamaranmu secara berkala.
+    </p>
+
+    <div class="bg-slate-50 border-2 border-dashed border-slate-200 p-8 rounded-[2.5rem] max-w-md mx-auto mb-10 relative overflow-hidden">
+        <div class="absolute top-0 right-0 p-3">
+            <span class="text-[10px] font-black bg-white text-slate-400 px-3 py-1 rounded-full shadow-sm uppercase tracking-widest">Registration ID</span>
+        </div>
+        
+        <h2 id="pendaftaranID" class="text-2xl font-black text-[#7f97d9] mb-6 mt-4 tracking-wider">
+            <%= id %>
+        </h2>
+
+        <button onclick="copyID()" class="group flex items-center gap-3 bg-white hover:bg-slate-800 hover:text-white px-6 py-3 rounded-2xl mx-auto font-black text-xs uppercase tracking-widest shadow-sm transition-all duration-300">
+            <svg id="copyIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+            </svg>
+            <span id="copyText">Salin ID Pendaftaran</span>
+        </button>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/status-lamaran-tamu" class="w-full sm:w-auto px-10 py-4 bg-slate-800 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl shadow-slate-200">
+            Cek Status Sekarang
+        </a>
+        <a href="/jelajah-loker" class="w-full sm:w-auto px-10 py-4 bg-white border-2 border-slate-100 text-slate-400 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all">
+            Kembali Jelajah Loker
+        </a>
+    </div>
+
+    <p class="mt-12 text-slate-400 text-xs font-medium">
+        *Pastikan kamu menyimpan ID ini. Kami tidak mengirimkan email konfirmasi untuk pelamar tamu.
+    </p>
+</main>
+
+<script>
+    function copyID() {
+        const idText = document.getElementById('pendaftaranID').innerText.trim();
+        const copyText = document.getElementById('copyText');
+        const copyIcon = document.getElementById('copyIcon');
+
+        navigator.clipboard.writeText(idText).then(() => {
+            // Animasi Berhasil
+            copyText.innerText = "Tersalin ke Clipboard!";
+            document.querySelector('.group').classList.add('bg-green-500', 'text-white');
+            
+            setTimeout(() => {
+                copyText.innerText = "Salin ID Pendaftaran";
+                document.querySelector('.group').classList.remove('bg-green-500', 'text-white');
+            }, 3000);
+        });
+    }
+</script>
+
+<%- include('partials/footer') %>

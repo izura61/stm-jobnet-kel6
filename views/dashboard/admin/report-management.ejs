@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIJA-JOBNET | Report Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap");
+    body { font-family: "Plus Jakarta Sans", sans-serif; }
+  </style>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+  <div class="flex min-h-screen p-6 gap-6">
+    <aside class="w-64 bg-white rounded-2xl shadow-[10px_0_40px_rgba(0,0,0,0.18)] flex flex-col">
+      <div class="p-6 font-bold text-xl border-b text-blue-600">STMONE</div>
+      <nav class="p-6 flex-1">
+        <ul class="space-y-3">
+          <li><a href="/admin/dashboard" class="block py-2 px-4 rounded-lg <%= currentPage === 'dashboard' ? 'bg-blue-600 text-white' : 'hover:bg-slate-50' %> font-semibold">Dashboard</a></li>
+          <li><a href="/admin/user-management" class="block py-2 px-4 rounded-lg <%= currentPage === 'user-management' ? 'bg-blue-600 text-white' : 'hover:bg-slate-50' %> font-semibold">User Management</a></li>
+          <li><a href="/admin/report-management" class="block py-2 px-4 rounded-lg <%= currentPage === 'report-management' ? 'bg-blue-600 text-white' : 'hover:bg-slate-50' %> font-semibold">Report Management</a></li>
+          <li><a href="/admin/web-monitoring" class="block py-2 px-4 rounded-lg <%= currentPage === 'web-monitoring' ? 'bg-blue-600 text-white' : 'hover:bg-slate-50' %> font-semibold">Web Monitoring</a></li>
+          <li><a href="/admin/logout" class="block py-2 px-4 rounded-lg hover:bg-red-100 text-red-600 font-semibold transition">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="flex-1 space-y-6">
+      <div class="flex justify-between items-center mb-4">
+        <h1 class="text-3xl font-extrabold text-blue-600">Report Management</h1>
+        <p class="text-slate-500 text-sm font-medium bg-white px-4 py-2 rounded-xl shadow-sm border border-slate-200">
+          <i class="fas fa-info-circle mr-2 text-blue-500"></i> Pantau laporan masuk dari pengguna
+        </p>
+      </div>
+
+      <section class="bg-white rounded-2xl shadow-md overflow-hidden border border-slate-200">
+        <div class="p-6 border-b border-slate-100 bg-slate-50/50">
+          <h2 class="text-xl font-bold text-slate-800">Incoming Reports</h2>
+          <p class="text-xs text-slate-500">Daftar keluhan dan laporan pelanggaran yang dikirimkan oleh user</p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="text-slate-400 border-b border-slate-100 bg-slate-50/30">
+                <th class="p-4 text-left font-bold uppercase tracking-wider text-[11px] w-1/6">Pelapor</th>
+                <th class="p-4 text-left font-bold uppercase tracking-wider text-[11px] w-1/6">Target</th>
+                <th class="p-4 text-left font-bold uppercase tracking-wider text-[11px] w-1/6">Jenis</th>
+                <th class="p-4 text-left font-bold uppercase tracking-wider text-[11px] w-2/6">Deskripsi</th>
+                <th class="p-4 text-left font-bold uppercase tracking-wider text-[11px] w-1/6 text-center">Tanggal</th>
+                <th class="p-4 text-center font-bold uppercase tracking-wider text-[11px] w-40">Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+              <% if (typeof reports !== 'undefined' && Array.isArray(reports) && reports.length > 0) { %>
+                <% reports.forEach(report => { %>
+                  <tr class="hover:bg-blue-50/30 transition duration-150">
+                    <td class="p-4 align-middle font-semibold text-slate-700">
+                      <%= report.reporter %>
+                    </td>
+                    <td class="p-4 align-middle">
+                        <span class="text-slate-500 font-mono text-[11px] bg-slate-100 px-2 py-1 rounded">
+                            <%= report.targetUser %>
+                        </span>
+                    </td>
+                    <td class="p-4 align-middle">
+                      <span class="px-2 py-1 text-[10px] uppercase font-bold rounded-lg bg-red-100 text-red-600 border border-red-200">
+                        <%= report.type %>
+                      </span>
+                    </td>
+                    <td class="p-4 align-middle text-slate-600 leading-relaxed"><%= report.description %></td>
+                    <td class="p-4 align-middle text-slate-400 font-medium text-center">
+                      <%= new Date(report.createdAt).toLocaleDateString('id-ID') %>
+                    </td>
+                    <td class="p-4 align-middle text-center">
+                        <a href="/admin/report/delete/<%= report._id %>" 
+                           onclick="return confirm('Hapus laporan ini dari daftar?')"
+                           class="text-slate-300 hover:text-red-500 transition duration-200 text-lg">
+                          <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } else { %>
+                <tr>
+                  <td colspan="6" class="p-12 text-center text-slate-400 italic bg-slate-50/50">
+                    <div class="flex flex-col items-center justify-center space-y-3">
+                        <i class="fas fa-clipboard-check text-4xl text-slate-200"></i>
+                        <p>Bersih! Tidak ada laporan yang perlu ditinjau.</p>
+                    </div>
+                  </td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    ScrollReveal().reveal("section", {
+      delay: 150,
+      distance: "40px",
+      origin: "bottom",
+      duration: 800,
+      interval: 100
+    });
+  </script>
+</body>
+</html>

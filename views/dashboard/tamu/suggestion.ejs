@@ -1,0 +1,87 @@
+<%- include('partials/header', { currentPage: 'help', title: 'Suggestions - Help Center' }) %>
+
+<style>
+    body {
+        background: radial-gradient(circle at top right, #fdfdfd, #ecefff);
+    }
+    .suggest-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    .suggest-card:hover {
+        transform: translateY(-5px);
+        border-color: #7f97d9;
+        background: white;
+    }
+    /* Efek hiasan di pojok kartu */
+    .suggest-card::after {
+        content: '';
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        width: 60px;
+        height: 60px;
+        background: #7f97d9;
+        opacity: 0.05;
+        border-radius: 50%;
+    }
+</style>
+
+<main class="max-w-5xl mx-auto px-6 py-16">
+    
+    <div class="mb-12">
+        <nav class="flex mb-4 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <a href="/dashboard/tamu/help" class="hover:text-[#7f97d9]">Help Center</a>
+            <span class="mx-2">/</span>
+            <span class="text-slate-600">Suggestion Type</span>
+        </nav>
+        <h1 class="text-4xl font-black text-slate-800 mb-3 tracking-tight">Suggestion Type</h1>
+        <p class="text-slate-500 font-medium">We value your thoughts. Help us build a better platform for everyone.</p>
+    </div>
+
+    <div class="grid gap-8">
+
+        <div class="suggest-card bg-white/70 border border-slate-200 rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-center gap-10 shadow-sm">
+            <div class="w-36 h-36 flex-shrink-0 bg-yellow-50 rounded-full p-4 flex items-center justify-center">
+                <img src="/images/fiture.png" alt="Feature Idea" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1157/1157000.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-3">Feature Idea</h3>
+                <p class="text-slate-500 leading-relaxed text-sm md:text-base mb-6">
+                    Punya ide fitur baru yang bisa mempermudah proses seleksi siswa? Bagikan inovasi Anda dan biarkan kami mewujudkannya untuk efisiensi kerja Anda.
+                </p>
+                <button class="px-5 py-2 text-xs font-bold text-white bg-[#7f97d9] rounded-full hover:shadow-lg transition-all">Submit Idea</button>
+            </div>
+        </div>
+
+        <div class="suggest-card bg-white/70 border border-slate-200 rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-center gap-10 shadow-sm">
+            <div class="w-36 h-36 flex-shrink-0 bg-emerald-50 rounded-full p-4 flex items-center justify-center">
+                <img src="/images/feedback.png" alt="Feedback User" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2593/2593482.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-3">Feedback User</h3>
+                <p class="text-slate-500 leading-relaxed text-sm md:text-base mb-6">
+                    Berikan ulasan Anda mengenai layanan dukungan pelanggan dan responsivitas platform kami. Kritik konstruktif Anda adalah bahan bakar perbaikan kami.
+                </p>
+                <button class="px-5 py-2 text-xs font-bold text-white bg-[#7f97d9] rounded-full hover:shadow-lg transition-all">Write Feedback</button>
+            </div>
+        </div>
+
+        <div class="suggest-card bg-white/70 border border-slate-200 rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-center gap-10 shadow-sm">
+            <div class="w-36 h-36 flex-shrink-0 bg-blue-50 rounded-full p-4 flex items-center justify-center">
+                <img src="/images/experience.png" alt="User Experience" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2103/2103633.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-3">User Experience</h3>
+                <p class="text-slate-500 leading-relaxed text-sm md:text-base mb-6">
+                    Tampilan sulit digunakan? Navigasi membingungkan? Beritahu kami bagian mana yang perlu diperbaiki agar pengalaman Anda menggunakan STM JOB menjadi lebih mulus.
+                </p>
+                <button class="px-5 py-2 text-xs font-bold text-white bg-[#7f97d9] rounded-full hover:shadow-lg transition-all">Rate Experience</button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<%- include('partials/footer') %>

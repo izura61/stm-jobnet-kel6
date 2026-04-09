@@ -1,0 +1,73 @@
+<%- include('partials/header', { currentPage: 'help', title: 'Formal Technical - Help Center' }) %>
+
+<style>
+    body {
+        background: radial-gradient(circle at top, #f7f7f7, #e6e6e6);
+    }
+    .tech-card {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .tech-card:hover {
+        transform: scale(1.02);
+        border-color: #7f97d9;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+</style>
+
+<main class="max-w-5xl mx-auto px-6 py-16">
+    
+    <div class="mb-12">
+        <nav class="flex mb-4 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <a href="/dashboard/tamu/help" class="hover:text-[#7f97d9]">Help Center</a>
+            <span class="mx-2">/</span>
+            <span class="text-slate-600">Formal Technical</span>
+        </nav>
+        <h1 class="text-4xl font-black text-slate-800 mb-3 tracking-tight">Formal Technical</h1>
+        <p class="text-slate-500 font-medium">Having trouble with document uploads or system process errors?</p>
+    </div>
+
+    <div class="flex flex-col gap-6">
+
+        <div class="tech-card bg-white border border-slate-200 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row items-center gap-10 shadow-sm">
+            <div class="w-40 h-40 flex-shrink-0 bg-indigo-50 rounded-3xl overflow-hidden p-6">
+                <img src="/images/update_fail.png" alt="Update Failure" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/595/595067.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <div class="inline-block px-3 py-1 bg-indigo-100 text-indigo-600 text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">Upload Issue</div>
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-3">Update Failure</h3>
+                <p class="text-slate-500 leading-relaxed text-sm md:text-base">
+                    Gagal saat mengunggah berkas atau memperbarui data loker? Pastikan koneksi internet Anda tidak terputus dan ukuran file tidak melebihi batas 5MB per unggahan.
+                </p>
+            </div>
+        </div>
+
+        <div class="tech-card bg-white border border-slate-200 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row items-center gap-10 shadow-sm">
+            <div class="w-40 h-40 flex-shrink-0 bg-rose-50 rounded-3xl overflow-hidden p-6">
+                <img src="/images/process_error.png" alt="Process Error" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4457/4457164.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <div class="inline-block px-3 py-1 bg-rose-100 text-rose-600 text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">System Error</div>
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-3">Process Error</h3>
+                <p class="text-slate-500 leading-relaxed text-sm md:text-base">
+                    Muncul pesan kesalahan sistem saat memproses lamaran? Silakan muat ulang halaman atau bersihkan <i>Cookies</i> pada browser Anda untuk menyegarkan sesi aplikasi.
+                </p>
+            </div>
+        </div>
+
+        <div class="tech-card bg-white border border-slate-200 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row items-center gap-10 shadow-sm">
+            <div class="w-40 h-40 flex-shrink-0 bg-slate-100 rounded-3xl overflow-hidden p-6">
+                <img src="/images/doc_tech.png" alt="Technical Documentation" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2991/2991108.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <div class="inline-block px-3 py-1 bg-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">Manual Guide</div>
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-3">Technical Documentation</h3>
+                <p class="text-slate-500 leading-relaxed text-sm md:text-base">
+                    Pelajari spesifikasi teknis platform kami, mulai dari format file yang didukung hingga integrasi sistem notifikasi email untuk perusahaan Anda.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<%- include('partials/footer') %>

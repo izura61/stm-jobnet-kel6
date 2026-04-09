@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Loker | <%= loker.judul %> - STM JOB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        
+        .modal-animate { animation: modalIn 0.3s ease-out; }
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        #profileMenu:not(.hidden) { animation: fadeInScale 0.2s ease-out; }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* CSS Print agar hasil cetak bersih */
+        @media print {
+            nav, .no-print, button, form, #editModal { display: none !important; }
+            body { background-color: white; }
+            main { padding: 0; margin: 0; max-width: 100%; }
+            .bg-white { border: none !important; box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <nav class="bg-[#7f97d9] h-[70px] flex items-center justify-between px-8 sticky top-0 z-50 shadow-lg text-white no-print">
+        <div class="flex items-center gap-3 font-bold text-2xl tracking-tighter">
+            <img src="/images/LOGO-STM.png" class="h-10 w-auto invert brightness-0" alt="Logo">
+            <span>STM JOB</span>
+        </div>
+        
+        <div class="flex items-center gap-8">
+            <ul class="hidden md:flex gap-8 text-sm font-semibold uppercase tracking-wider">
+                <li><a href="/dashboard/perusahaan" class="hover:text-slate-200 transition-all">Dashboard</a></li>
+                <li><a href="/career" class="hover:text-slate-200 transition-all">Create Job</a></li>
+                <li><a href="/kelola-loker" class="hover:text-slate-200 transition-all border-b-2 border-white pb-1">Manage Job</a></li>
+                <li><a href="/help" class="hover:text-slate-200 transition-all">Help</a></li>
+            </ul>
+
+            <div class="relative inline-block text-left">
+                <button id="profileDropdownBtn" class="flex items-center gap-3 bg-white/10 pl-4 pr-1 py-1 rounded-full border border-white/20 hover:bg-white/20 transition-all">
+                    <span class="text-xs font-bold hidden sm:block"><%= user ? user.name.split(' ')[0] : 'Admin' %></span>
+                    <div class="h-9 w-9 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                        <img src="https://ui-avatars.com/api/?name=<%= user ? encodeURIComponent(user.name) : 'Company' %>&background=7f97d9&color=fff" class="w-full h-full object-cover">
+                    </div>
+                </button>
+
+                <div id="profileMenu" class="hidden absolute right-0 mt-3 w-56 bg-white rounded-[1.5rem] shadow-2xl border border-slate-100 z-[100] overflow-hidden text-slate-700">
+                    <div class="px-4 py-3 border-b border-slate-50 bg-slate-50/50">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1.5">Industrial Partner</p>
+                        <p class="text-xs font-bold truncate"><%= user ? user.name : 'Company Name' %></p>
+                    </div>
+                    <a href="/logout" class="flex items-center gap-3 px-4 py-3 text-[11px] font-bold text-red-500 hover:bg-red-50 transition-all">KELUAR APLIKASI</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6 py-12">
+        <div class="mb-8 flex items-center justify-between no-print">
+            <a href="/kelola-loker" class="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest hover:text-[#7f97d9] transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg>
+                Kembali ke Kelola
+            </a>
+            <div class="flex gap-3">
+                <button onclick="openEditModal()" class="px-6 py-2.5 bg-slate-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#7f97d9] transition-all shadow-lg active:scale-95">
+                    Edit Lowongan
+                </button>
+                <form action="/api/lowongan/toggle-status/<%= loker._id %>" method="POST">
+                    <button type="submit" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm border border-slate-200 active:scale-95 <%= loker.status === 'Aktif' ? 'bg-amber-50 text-amber-600 hover:bg-amber-100' : 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' %>">
+                        <%= loker.status === 'Aktif' ? 'Tutup Lowongan' : 'Aktifkan' %>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[3rem] border border-slate-100 shadow-sm overflow-hidden mb-12">
+            <div class="p-10 md:p-16 bg-gradient-to-br from-[#7f97d9]/10 via-transparent to-transparent relative">
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter border <%= loker.status === 'Aktif' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-slate-100 text-slate-500 border-slate-200' %>">
+                            <%= loker.status %>
+                        </span>
+                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Dibuat pada <%= new Date(loker.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' }) %></span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-5xl font-black text-slate-800 leading-tight mb-4"><%= loker.judul %></h1>
+                    <p class="text-xl text-slate-500 font-medium mb-8"><%= user.name %> • <span class="text-[#7f97d9]"><%= loker.lokasi %></span></p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white/60 border border-slate-100 px-6 py-4 rounded-2xl">
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Tipe</p>
+                            <p class="text-sm font-bold text-slate-700"><%= loker.tipe %></p>
+                        </div>
+                        <div class="bg-white/60 border border-slate-100 px-6 py-4 rounded-2xl">
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Gaji</p>
+                            <p class="text-sm font-bold text-emerald-600">Rp <span class="format-money"><%= loker.gaji %></span></p>
+                        </div>
+                        <div class="bg-white/60 border border-slate-100 px-6 py-4 rounded-2xl">
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Pelamar</p>
+                            <p class="text-sm font-bold text-[#7f97d9]"><%= jumlahPelamar %> Orang</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-10 md:p-16 grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-slate-50">
+                <div class="md:col-span-2 space-y-12">
+                    <div>
+                        <h3 class="text-xs font-black text-slate-800 uppercase tracking-[0.3em] mb-4 flex items-center gap-3">
+                            <span class="w-8 h-[2px] bg-[#7f97d9]"></span> Deskripsi Pekerjaan
+                        </h3>
+                        <div class="text-slate-600 leading-relaxed text-lg whitespace-pre-line"><%= loker.deskripsi %></div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-black text-slate-800 uppercase tracking-[0.3em] mb-4 flex items-center gap-3">
+                            <span class="w-8 h-[2px] bg-[#7f97d9]"></span> Kualifikasi Utama
+                        </h3>
+                        <div class="text-slate-600 leading-relaxed text-lg whitespace-pre-line"><%= loker.kualifikasi %></div>
+                    </div>
+                </div>
+                <div class="space-y-4 no-print">
+                    <div class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100">
+                        <h4 class="font-black text-slate-800 text-sm uppercase tracking-widest mb-6 text-center">Tindakan</h4>
+                        <div class="flex flex-col gap-3">
+                            <a href="/api/lowongan/pelamar/<%= loker._id %>" class="w-full py-4 bg-[#7f97d9] text-white rounded-2xl text-[10px] font-black uppercase tracking-widest text-center shadow-lg hover:bg-slate-900 transition-all">
+                                Kelola Pelamar
+                            </a>
+                            <button onclick="window.print()" class="w-full py-4 bg-white border border-slate-200 text-slate-600 rounded-2xl text-[10px] font-black uppercase tracking-widest text-center hover:bg-slate-100 transition-all">
+                                Cetak Laporan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="editModal" class="fixed inset-0 z-[100] hidden no-print">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeEditModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div class="bg-white w-full max-w-2xl rounded-[3.5rem] shadow-2xl overflow-hidden modal-animate">
+                <div class="px-10 py-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <h2 class="text-xl font-black text-slate-800 uppercase tracking-tight">Edit Detail Loker</h2>
+                    <button onclick="closeEditModal()" class="text-slate-400 hover:text-red-500 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+                
+                <form action="/api/lowongan/edit/<%= loker._id %>" method="POST" class="p-10 space-y-5 max-h-[75vh] overflow-y-auto">
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Judul Pekerjaan</label>
+                        <input type="text" name="judul" value="<%= loker.judul %>" required class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-slate-700">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Tipe</label>
+                            <select name="tipe" class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-slate-700">
+                                <option value="Full-time" <%= loker.tipe === 'Full-time' ? 'selected' : '' %>>Full-time</option>
+                                <option value="Part-time" <%= loker.tipe === 'Part-time' ? 'selected' : '' %>>Part-time</option>
+                                <option value="Internship" <%= loker.tipe === 'Internship' ? 'selected' : '' %>>Internship</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Gaji (Rp)</label>
+                            <input type="text" id="gajiInput" name="gaji" value="<%= loker.gaji %>" required class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-slate-700">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Lokasi</label>
+                        <input type="text" name="lokasi" value="<%= loker.lokasi %>" required class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-slate-700">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Deskripsi</label>
+                        <textarea name="deskripsi" rows="3" class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-slate-700"><%= loker.deskripsi %></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Kualifikasi</label>
+                        <textarea name="kualifikasi" rows="3" class="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-[#7f97d9] outline-none font-bold text-slate-700"><%= loker.kualifikasi %></textarea>
+                    </div>
+
+                    <div class="pt-4 flex gap-4">
+                        <button type="submit" class="flex-1 py-4 bg-[#7f97d9] text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-lg hover:bg-slate-900 transition-all active:scale-95">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-100 py-10 px-8 mt-20 no-print">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="flex items-center gap-3">
+                <img src="/images/LOGO-STM.png" class="h-10 w-auto opacity-80">
+                <div class="text-left">
+                    <p class="font-black text-slate-800 text-sm tracking-tighter leading-tight uppercase">STM JOB PORTAL</p>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">SMK Negeri 1 Cimahi</p>
+                </div>
+            </div>
+            <p class="text-[10px] text-slate-400 font-medium">© 2026 COMNETA 50. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FORM FORMATTER RUPIAH
+        function formatRupiah(angka) {
+            let number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa  = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            return split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        }
+
+        const gajiInput = document.getElementById('gajiInput');
+        gajiInput.addEventListener('keyup', function() { this.value = formatRupiah(this.value); });
+
+        // MODAL & DROPDOWN LOGIC
+        const profileBtn = document.getElementById('profileDropdownBtn');
+        const profileMenu = document.getElementById('profileMenu');
+        profileBtn.addEventListener('click', (e) => { e.stopPropagation(); profileMenu.classList.toggle('hidden'); });
+        document.addEventListener('click', () => { profileMenu.classList.add('hidden'); });
+
+        function openEditModal() { document.getElementById('editModal').classList.remove('hidden'); }
+        function closeEditModal() { document.getElementById('editModal').classList.add('hidden'); }
+
+        // RUN ON LOAD
+        window.onload = () => {
+            // Format input di modal
+            if(gajiInput.value) gajiInput.value = formatRupiah(gajiInput.value);
+            // Format teks di halaman
+            document.querySelectorAll('.format-money').forEach(el => {
+                el.innerText = formatRupiah(el.innerText);
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SIJA-JOBNET | Sign In</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        background-color: #f0f4ff;
+      }
+      .mesh-gradient {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        background:
+          radial-gradient(at 0% 0%, #c7d2fe 0px, transparent 50%),
+          radial-gradient(at 100% 0%, #e0e7ff 0px, transparent 50%),
+          radial-gradient(at 100% 100%, #818cf8 0px, transparent 50%),
+          radial-gradient(at 0% 100%, #a5b4fc 0px, transparent 50%),
+          radial-gradient(at 50% 50%, #6366f1 0px, transparent 50%);
+        filter: blur(40px);
+        animation: meshMove 15s ease infinite alternate;
+      }
+      @keyframes meshMove {
+        0% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.2) rotate(3deg); }
+        100% { transform: scale(1) rotate(0deg); }
+      }
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        z-index: 1;
+        opacity: 0.6;
+        animation: float 20s infinite ease-in-out;
+      }
+      .orb-1 {
+        width: 400px;
+        height: 400px;
+        background: #818cf8;
+        top: -10%;
+        left: -10%;
+      }
+      .orb-2 {
+        width: 300px;
+        height: 300px;
+        background: #6366f1;
+        bottom: 10%;
+        right: 10%;
+        animation-delay: -5s;
+      }
+      @keyframes float {
+        0%,100% { transform: translate(0, 0); }
+        33% { transform: translate(30px, 50px); }
+        66% { transform: translate(-20px, 20px); }
+      }
+      .container {
+        width: 95%;
+        max-width: 1050px;
+        min-height: 600px;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(25px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 32px;
+        display: flex;
+        overflow: hidden;
+        box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+      }
+      .left {
+        width: 42%;
+        background: linear-gradient(135deg, rgba(99,102,241,0.85) 0%, rgba(79,70,229,0.9) 100%);
+        color: #fff;
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+      .left img {
+        width: 200px;
+        margin: 0 auto 35px;
+      }
+      .left h1 {
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1.1;
+      }
+      .left p {
+        font-size: 15px;
+        line-height: 1.8;
+        opacity: 0.9;
+      }
+      .right {
+        width: 58%;
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .right h2 {
+        font-size: 32px;
+        color: #1e1b4b;
+        margin-bottom: 8px;
+        font-weight: 800;
+      }
+      .right p.subtitle {
+        font-size: 14px;
+        color: #475569;
+        margin-bottom: 35px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      input {
+        width: 100%;
+        padding: 16px 20px;
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        outline: none;
+        font-size: 14px;
+        background: rgba(255, 255, 255, 0.7);
+      }
+      input:focus {
+        border-color: #6366f1;
+        background: #fff;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+      }
+      .btn-login {
+        margin-top: 10px;
+        padding: 16px;
+        border-radius: 16px;
+        border: none;
+        background: #4f46e5;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .btn-login:hover {
+        background: #4338ca;
+      }
+      .or-text {
+        margin: 30px 0 20px;
+        font-size: 12px;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+      }
+      .or-text::before,
+      .or-text::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: rgba(0, 0, 0, 0.05);
+        margin: 0 15px;
+      }
+      .btn-group {
+        display: flex;
+        gap: 15px;
+      }
+      .btn-outline {
+        flex: 1;
+        padding: 14px;
+        border-radius: 16px;
+        border: 1px solid rgba(79, 70, 229, 0.3);
+        background: rgba(255, 255, 255, 0.5);
+        color: #4f46e5;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .btn-outline:hover {
+        background: #fff;
+      }
+      @media (max-width: 900px) {
+        .container { flex-direction: column; width: 92%; margin: 20px; }
+        .left,.right { width: 100%; padding: 40px; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="mesh-gradient"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+      <div class="left">
+        <img src="logo stm.png" alt="SIJA-JOBNET Logo" />
+        <h1>Welcome Back to<br />SIJA-JOBNET</h1>
+        <p>
+          Monitor PKL dan temukan karir impianmu lebih cepat dengan sistem
+          terintegrasi mitra industri.
+        </p>
+      </div>
+
+      <div class="right">
+        <h2>Sign In</h2>
+        <p class="subtitle">Gunakan kredensial terdaftar Anda</p>
+
+        <form id="formLogin">
+          <input type="text" name="email" id="email" placeholder="Email atau Nama Lengkap" required />
+          <input type="password" name="password" id="password" placeholder="Password" required />
+          <button class="btn-login" type="submit" id="submitBtn">Sign In</button>
+        </form>
+
+        <div class="or-text">Atau Masuk Sebagai</div>
+
+        <div class="btn-group">
+          <button type="button" class="btn-outline" onclick="guestLogin()">Tamu</button>
+          <button type="button" class="btn-outline" onclick="window.location.href = '/register'">Mitra Baru</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("formLogin").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const submitBtn = document.getElementById("submitBtn");
+
+        submitBtn.innerText = "Processing...";
+        submitBtn.style.opacity = "0.7";
+        submitBtn.disabled = true;
+
+        try {
+          const response = await fetch("/api/login/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            if (result.token) localStorage.setItem("token", result.token);
+
+            if (result.role === "admin") {
+              window.location.replace("/admin/verify");
+            } else if (result.role === "perusahaan") {
+              window.location.replace("/dashboard/perusahaan");
+            } else if (result.role === "siswa") {
+              window.location.replace("/dashboard/siswa");
+            } else {
+              window.location.replace("/dashboard/tamu");
+            }
+          } else {
+            alert("Login Gagal: " + (result.message || "Email atau Password salah"));
+            submitBtn.innerText = "Sign In";
+            submitBtn.style.opacity = "1";
+            submitBtn.disabled = false;
+          }
+        } catch (err) {
+          alert("Terjadi kesalahan koneksi ke server.");
+          submitBtn.innerText = "Sign In";
+          submitBtn.style.opacity = "1";
+          submitBtn.disabled = false;
+        }
+      });
+
+      function guestLogin() {
+        window.location.href = "/dashboard/tamu";
+      }
+    </script>
+  </body>
+</html>

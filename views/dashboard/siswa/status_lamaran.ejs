@@ -1,0 +1,88 @@
+<%- include('partials/header', { title: 'Status Lamaran - STM JOB', currentPage: 'status' }) %>
+
+<main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="mb-10 text-center md:text-left">
+        <h2 class="text-xs font-black text-slate-400 uppercase tracking-[0.4em] flex items-center justify-center md:justify-start gap-3 mb-4">
+            <span class="w-12 h-[3px] bg-[#7f97d9] rounded-full"></span> Tracking Lamaran
+        </h2>
+        <h1 class="text-3xl font-black text-slate-800 tracking-tight">Riwayat Pendaftaran Saya</h1>
+        <p class="text-slate-500 text-sm mt-1 font-medium">Pantau status lamaran kamu secara real-time di sini.</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6">
+        <% if (lamaran && lamaran.length > 0) { %>
+            <% lamaran.forEach(item => { %>
+                <div class="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-xl hover:border-[#7f97d9]/20 transition-all duration-300 group">
+                    
+                    <div class="flex items-center gap-6 flex-1">
+                        <div class="w-16 h-16 bg-slate-50 rounded-2xl p-3 flex-shrink-0 border border-slate-100 group-hover:bg-white transition-colors">
+                            <img src="/uploads/logos/<%= item.lowongan.perusahaan.logo %>" 
+                                 onerror="this.src='https://ui-avatars.com/api/?name=<%= encodeURIComponent(item.lowongan.perusahaan.name) %>&background=7f97d9&color=fff'"
+                                 class="w-full h-full object-contain">
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-black text-slate-800 leading-tight group-hover:text-[#7f97d9] transition-colors">
+                                <%= item.lowongan.judul %>
+                            </h3>
+                            <p class="text-slate-500 font-bold text-sm mb-2"><%= item.lowongan.perusahaan.name %></p>
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[9px] font-black uppercase tracking-wider">
+                                    ID: #<%= item._id.toString().slice(-6).toUpperCase() %>
+                                </span>
+                                <span class="text-slate-300">•</span>
+                                <span class="text-[10px] text-slate-400 font-bold uppercase">
+                                    <%= new Date(item.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) %>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-start md:items-center min-w-[180px]">
+                        <% if(item.status === 'Diterima') { %>
+                            <div class="px-6 py-2.5 bg-emerald-50 text-emerald-600 rounded-2xl border border-emerald-100 w-full text-center shadow-sm shadow-emerald-100">
+                                <div class="flex items-center justify-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                    <span class="text-[11px] font-black uppercase tracking-widest">Diterima</span>
+                                </div>
+                            </div>
+                        <% } else if(item.status === 'Ditolak') { %>
+                            <div class="px-6 py-2.5 bg-rose-50 text-rose-500 rounded-2xl border border-rose-100 w-full text-center">
+                                <span class="text-[11px] font-black uppercase tracking-widest">Ditolak</span>
+                            </div>
+                        <% } else { %>
+                            <div class="px-6 py-2.5 bg-amber-50 text-amber-600 rounded-2xl border border-amber-100 w-full text-center">
+                                <span class="text-[11px] font-black uppercase tracking-widest">Pending Review</span>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <div class="md:ml-4 flex items-center">
+                        <a href="/dashboard/siswa/company/<%= item.lowongan.perusahaan._id %>" 
+                           class="flex items-center justify-center w-14 h-14 bg-slate-50 text-slate-400 rounded-2xl hover:bg-[#7f97d9] hover:text-white hover:rotate-90 transition-all duration-500 shadow-sm border border-slate-100"
+                           title="Lihat Profil Perusahaan">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <div class="bg-white p-20 rounded-[4rem] border border-dashed border-slate-200 text-center shadow-inner">
+                <div class="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-200">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-black text-slate-800 mb-2">Belum Ada Lamaran</h3>
+                <p class="text-slate-400 mb-10 max-w-sm mx-auto font-medium">Kamu belum melamar pekerjaan apapun. Ayo temukan pekerjaan impianmu sekarang!</p>
+                <a href="/career-siswa" class="px-10 py-4 bg-[#7f97d9] hover:bg-slate-900 text-white text-[11px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-xl shadow-[#7f97d9]/20">
+                    Cari Lowongan Sekarang
+                </a>
+            </div>
+        <% } %>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

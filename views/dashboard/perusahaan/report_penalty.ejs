@@ -1,0 +1,73 @@
+<%- include('partials/header', { currentPage: 'help', title: 'Report & Penalty - Help Center' }) %>
+
+<style>
+    body {
+        background: radial-gradient(circle at top, #fdfdfd, #f1f1f1);
+    }
+    .report-card {
+        transition: all 0.3s ease;
+    }
+    .report-card:hover {
+        border-color: #ffb8b8; 
+        background-color: #fffafa;
+        transform: translateY(-4px);
+    }
+</style>
+
+<main class="max-w-5xl mx-auto px-6 py-16">
+    
+    <div class="mb-12">
+        <nav class="flex mb-4 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <a href="/dashboard/perusahaan/help" class="hover:text-[#7f97d9]">Help Center</a>
+            <span class="mx-2">/</span>
+            <span class="text-slate-600">Report & Penalty</span>
+        </nav>
+        <h1 class="text-4xl font-black text-slate-800 mb-3 tracking-tight">Report / Penalty</h1>
+        <p class="text-slate-500 font-medium">Reporting issues or understanding account restrictions.</p>
+    </div>
+
+    <div class="grid gap-6">
+
+        <div class="report-card bg-white border border-slate-200 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row items-center gap-10 shadow-sm">
+            <div class="w-40 h-40 flex-shrink-0 bg-orange-50 rounded-3xl overflow-hidden p-6 text-center">
+                <img src="/images/harassment.png" alt="Harassment" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2333/2333437.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <div class="inline-block px-3 py-1 bg-orange-100 text-orange-600 text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">Urgent</div>
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-3">Harassment</h3>
+                <p class="text-slate-500 leading-relaxed text-sm md:text-base">
+                    Laporkan tindakan tidak menyenangkan atau perilaku tidak profesional yang dilakukan oleh pelamar selama proses rekrutmen berlangsung. Kami menjamin kerahasiaan identitas pelapor.
+                </p>
+            </div>
+        </div>
+
+        <div class="report-card bg-white border border-slate-200 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row items-center gap-10 shadow-sm">
+            <div class="w-40 h-40 flex-shrink-0 bg-red-50 rounded-3xl overflow-hidden p-6">
+                <img src="/images/abuse.png" alt="Abuser" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3807/3807871.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <div class="inline-block px-3 py-1 bg-red-100 text-red-600 text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">Security</div>
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-3">Abuser</h3>
+                <p class="text-slate-500 leading-relaxed text-sm md:text-base">
+                    Penyalahgunaan fitur sistem atau indikasi akun palsu? Laporkan ke tim admin untuk dilakukan penalti atau pemblokiran akun secara permanen guna menjaga kualitas platform.
+                </p>
+            </div>
+        </div>
+
+        <div class="report-card bg-white border border-slate-200 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row items-center gap-10 shadow-sm">
+            <div class="w-40 h-40 flex-shrink-0 bg-blue-50 rounded-3xl overflow-hidden p-6">
+                <img src="/images/bug.png" alt="Bug & Signal" class="w-full h-full object-contain" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1055/1055685.png'">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <div class="inline-block px-3 py-1 bg-blue-100 text-blue-600 text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">Technical</div>
+                <h3 class="text-2xl font-bold text-[#4a6fdc] mb-3">Bug & Signal</h3>
+                <p class="text-slate-500 leading-relaxed text-sm md:text-base">
+                    Mengalami kendala sinyal atau menemukan celah keamanan (bug)? Kontribusi Anda sangat berarti bagi pengembangan aplikasi STM JOB yang lebih stabil di masa depan.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<%- include('partials/footer') %>

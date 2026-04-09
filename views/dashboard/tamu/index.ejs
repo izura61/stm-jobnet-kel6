@@ -1,0 +1,159 @@
+<%- include('partials/header', { title: 'Eksplorasi Karir - STM JOB', currentPage: 'dashboard' }) %>
+
+<style>
+    .card-custom { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .card-custom:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(127, 151, 217, 0.2); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    
+    #searchSuggestions {
+        max-height: 280px;
+        overflow-y: auto;
+        z-index: 100;
+        scrollbar-width: thin;
+    }
+</style>
+
+<main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="bg-white p-10 md:p-16 rounded-[3rem] border border-slate-100 shadow-sm mb-12 relative overflow-hidden">
+        <div class="relative z-10 max-w-2xl">
+            <span class="inline-block px-4 py-1.5 bg-[#7f97d9]/10 text-[#7f97d9] text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-4">Akses Publik / Tamu</span>
+            <h1 class="text-4xl md:text-5xl font-black text-slate-800 leading-tight">Mulai Karir Anda di <span class="text-[#7f97d9]">STM JOB</span></h1>
+            <p class="text-slate-500 mt-4 text-xl leading-relaxed">Portal penghubung bakat SMK dengan dunia industri. Temukan peluang kerja terbaik tanpa harus masuk terlebih dahulu.</p>
+        </div>
+        <div class="absolute right-[-5%] bottom-[-10%] w-80 h-80 bg-[#7f97d9]/5 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="max-w-2xl mb-16 mx-auto text-center relative" id="searchWrapper">
+        <h3 class="text-slate-400 font-bold text-xs uppercase tracking-widest mb-4">Cari Mitra Industri</h3>
+        <div class="relative group">
+            <input type="text" id="searchInput" autocomplete="off"
+                class="w-full pl-14 pr-6 py-5 bg-white border-2 border-slate-100 rounded-[2rem] shadow-xl focus:ring-4 focus:ring-[#7f97d9]/20 focus:border-[#7f97d9] outline-none transition-all text-lg font-medium"
+                placeholder="Ketik nama perusahaan...">
+            <div class="absolute left-5 top-1/2 -translate-y-1/2 text-[#7f97d9]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+        </div>
+        <div id="searchSuggestions" class="hidden absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 text-left overflow-hidden ring-1 ring-black ring-opacity-5 z-50"></div>
+    </div>
+
+    <section class="mb-20">
+        <h2 class="text-xs font-black text-slate-400 uppercase tracking-[0.4em] flex items-center gap-3 mb-8">
+            <span class="w-12 h-[3px] bg-amber-400 rounded-full"></span> Rekomendasi Utama
+        </h2>
+        <div class="flex gap-8 overflow-x-auto pb-10 no-scrollbar snap-x">
+            <% if (typeof topPerusahaan !== 'undefined' && topPerusahaan.length > 0) { %>
+                <% topPerusahaan.forEach(item => { %>
+                    <div class="min-w-[320px] bg-white border border-slate-100 p-8 rounded-[3rem] shadow-sm flex flex-col items-center text-center card-custom snap-center">
+                        <div class="w-24 h-24 bg-slate-50 rounded-[2rem] p-5 mb-6">
+                            <img src="/uploads/logos/<%= item.details.logo %>" onerror="this.src='https://ui-avatars.com/api/?name=<%= encodeURIComponent(item.details.name) %>&background=7f97d9&color=fff'" class="w-full h-full object-contain">
+                        </div>
+                        <h4 class="font-black text-slate-800 text-xl mb-1 truncate w-full uppercase"><%= item.details.name %></h4>
+                        <p class="text-[10px] text-slate-400 font-bold mb-4 uppercase tracking-tighter"><%= item.totalLowongan %> Lowongan Tersedia</p>
+                        
+                        <a href="/tamu/company/<%= item.details._id %>" class="mt-auto w-full py-4 bg-slate-900 text-white rounded-2xl text-[11px] font-black hover:bg-[#7f97d9] transition-all uppercase tracking-widest text-center">
+                            Detail Perusahaan
+                        </a>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="w-full py-10 text-center bg-slate-50 rounded-[3rem] border-2 border-dashed border-slate-200 text-slate-400 font-bold text-xs uppercase italic">
+                    Belum ada rekomendasi perusahaan saat ini.
+                </div>
+            <% } %>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="text-xs font-black text-slate-400 uppercase tracking-[0.4em] mb-8 flex items-center gap-3">
+            <span class="w-12 h-[3px] bg-[#7f97d9] rounded-full"></span> Jelajahi Semua Mitra
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="companyGrid">
+            <% listPerusahaan.forEach(comp => { %>
+                <div class="company-card card-custom bg-white border border-slate-100 p-8 rounded-[3rem] flex flex-col sm:flex-row gap-8 items-center" 
+                     data-name="<%= comp.name %>" data-url="/tamu/company/<%= comp._id %>">
+                    <div class="w-32 h-32 bg-slate-50 rounded-[2.5rem] p-5 flex-shrink-0 shadow-inner">
+                        <img src="/uploads/logos/<%= comp.logo %>" onerror="this.src='https://ui-avatars.com/api/?name=<%= encodeURIComponent(comp.name) %>&background=7f97d9&color=fff'" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex-1 min-w-0 text-center sm:text-left">
+                        <h3 class="font-black text-slate-800 text-2xl truncate uppercase"><%= comp.name %></h3>
+                        <p class="text-xs text-slate-400 font-semibold mt-2 flex items-center justify-center sm:justify-start gap-1">
+                            <svg class="w-4 h-4 text-[#7f97d9]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                            <%= comp.alamat || 'Alamat tidak tersedia' %>
+                        </p>
+                        <div class="mt-8 flex items-center justify-between border-t border-slate-50 pt-6">
+                            <span class="text-[10px] text-[#7f97d9] font-black uppercase tracking-widest italic">Mitra Industri</span>
+                            <a href="/tamu/company/<%= comp._id %>" class="group flex items-center gap-2 text-slate-900 text-xs font-black uppercase tracking-tighter hover:text-[#7f97d9] transition-all">
+                                Lihat Profil <span>→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('searchInput');
+        const suggestionsBox = document.getElementById('searchSuggestions');
+        const searchWrapper = document.getElementById('searchWrapper');
+
+        const cardsData = Array.from(document.querySelectorAll('.company-card')).map(card => ({
+            name: card.dataset.name,
+            url: card.dataset.url
+        }));
+
+        searchInput.addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            suggestionsBox.innerHTML = '';
+            
+            if (val.length < 1) {
+                suggestionsBox.classList.add('hidden');
+                return;
+            }
+
+            const matches = cardsData.filter(c => c.name.toLowerCase().includes(val));
+
+            if (matches.length > 0) {
+                suggestionsBox.classList.remove('hidden');
+                matches.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'px-6 py-4 hover:bg-slate-50 cursor-pointer flex items-center justify-between border-b border-slate-100 last:border-0 transition-all';
+                    div.innerHTML = `
+                        <div class="flex flex-col">
+                            <span class="font-bold text-slate-700 text-sm uppercase">${item.name}</span>
+                            <span class="text-[10px] text-[#7f97d9] font-bold uppercase tracking-widest italic">Klik untuk lihat profil & lowongan</span>
+                        </div>
+                        <svg class="h-4 w-4 text-[#7f97d9]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    `;
+                    div.onclick = () => window.location.href = item.url;
+                    suggestionsBox.appendChild(div);
+                });
+            } else {
+                suggestionsBox.innerHTML = '<div class="px-6 py-4 text-slate-400 italic text-sm text-center">Perusahaan tidak ditemukan...</div>';
+                suggestionsBox.classList.remove('hidden');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchWrapper.contains(e.target)) {
+                suggestionsBox.classList.add('hidden');
+            }
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const val = searchInput.value.toLowerCase();
+                const firstMatch = cardsData.find(c => c.name.toLowerCase().includes(val));
+                if (firstMatch) window.location.href = firstMatch.url;
+            }
+        });
+    });
+</script>
+
+<%- include('partials/footer') %>

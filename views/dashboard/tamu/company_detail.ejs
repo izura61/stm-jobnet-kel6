@@ -1,0 +1,160 @@
+<%- include('partials/header', { title: perusahaan.name + ' - Profil', currentPage: 'company' }) %>
+
+<main class="max-w-7xl mx-auto px-6 py-12">
+    <a href="/jelajah-loker" class="inline-flex items-center gap-2 text-slate-400 hover:text-[#7f97d9] font-bold text-xs uppercase tracking-widest mb-10 transition-all group">
+        <div class="p-2 rounded-full group-hover:bg-[#7f97d9]/10 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />
+            </svg>
+        </div>
+        Kembali ke Daftar Mitra
+    </a>
+
+    <div class="bg-white rounded-[3rem] border border-slate-100 shadow-sm overflow-hidden mb-12">
+        <div class="h-48 bg-gradient-to-r from-[#7f97d9] to-[#6a83d4] relative">
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"></div>
+            
+            <div class="absolute -bottom-14 left-12 w-36 h-36 bg-white rounded-[2.5rem] p-4 shadow-2xl border-4 border-white flex items-center justify-center overflow-hidden">
+                <img src="/uploads/logos/<%= perusahaan.logo || 'default-logo.png' %>" 
+                     class="max-w-full max-h-full object-contain"
+                     onerror="this.src='https://ui-avatars.com/api/?name=<%= encodeURIComponent(perusahaan.name) %>&background=7f97d9&color=fff&size=128'">
+            </div>
+        </div>
+        
+        <div class="pt-20 pb-12 px-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <h1 class="text-4xl font-black text-slate-800 tracking-tight uppercase"><%= perusahaan.name %></h1>
+                    <% if(perusahaan.isVerified) { %>
+                    <span class="bg-blue-50 text-[#7f97d9] p-1.5 rounded-full" title="Mitra Terverifikasi">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.64.304 1.24.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                    </span>
+                    <% } %>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-4 text-slate-500 font-bold text-sm">
+                    <span class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-[#7f97d9]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                        <%= perusahaan.alamat || 'Alamat belum diatur' %>
+                    </span>
+                    <span class="hidden md:block w-1.5 h-1.5 bg-slate-300 rounded-full"></span>
+                    
+                    <% if(perusahaan.bidangIndustri && perusahaan.bidangIndustri.length > 0) { %>
+                        <% perusahaan.bidangIndustri.forEach(industri => { %>
+                            <span class="text-[#7f97d9] uppercase tracking-widest text-[10px] bg-[#7f97d9]/10 px-3 py-1 rounded-full"><%= industri %></span>
+                        <% }) %>
+                    <% } else { %>
+                        <span class="text-slate-400 uppercase tracking-widest text-[10px] bg-slate-100 px-3 py-1 rounded-full">Mitra Industri</span>
+                    <% } %>
+                </div>
+            </div>
+            
+            <a href="#lowongan-tersedia" 
+               class="px-8 py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#7f97d9] shadow-xl transition-all flex items-center justify-center gap-3 active:scale-95">
+                Cek Lowongan
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 13l-7 7-7-7" /></svg>
+            </a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div class="lg:col-span-2 space-y-12">
+            <section>
+                <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-[#7f97d9] rounded-full"></span> Tentang Perusahaan
+                </h2>
+                <div class="bg-white p-10 rounded-[2.5rem] border border-slate-50 shadow-sm leading-relaxed text-slate-600 font-medium">
+                    <%= perusahaan.deskripsi || 'Perusahaan ini belum menyertakan deskripsi lengkap.' %>
+                </div>
+            </section>
+
+            <section id="lowongan-tersedia">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-xl font-black text-slate-800 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-amber-400 rounded-full"></span> Lowongan Aktif
+                    </h2>
+                    <span class="bg-amber-100 text-amber-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
+                        <%= listLoker ? listLoker.length : 0 %> Peluang
+                    </span>
+                </div>
+                
+                <div class="grid grid-cols-1 gap-5">
+                    <% if (listLoker && listLoker.length > 0) { %>
+                        <% listLoker.forEach(loker => { %>
+                            <div class="group bg-white border border-slate-100 p-8 rounded-[2.5rem] hover:border-[#7f97d9] hover:shadow-2xl hover:shadow-[#7f97d9]/10 transition-all flex flex-col md:flex-row justify-between items-center gap-6">
+                                <div class="flex items-center gap-6 w-full">
+                                    <div class="w-16 h-16 bg-slate-50 group-hover:bg-[#7f97d9]/10 rounded-2xl flex items-center justify-center text-[#7f97d9] transition-colors">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-black text-xl text-slate-800 group-hover:text-[#7f97d9] transition-colors"><%= loker.judul %></h4>
+                                        <div class="flex gap-3 mt-1">
+                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest"><%= loker.tipe || 'Full Time' %></span>
+                                            <span class="text-slate-300">•</span>
+                                            <span class="text-[10px] font-black text-[#7f97d9] uppercase tracking-widest"><%= loker.lokasi %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-4 md:pt-0">
+                                    <div class="text-left md:text-right min-w-[120px]">
+                                        <p class="text-sm font-black text-slate-800"><%= loker.gaji || 'Negosiasi' %></p>
+                                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Estimasi Gaji</p>
+                                    </div>
+                                    <a href="/apply/<%= loker._id %>" 
+                                    class="w-full md:w-auto px-10 py-4 bg-slate-900 text-white group-hover:bg-[#7f97d9] rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] transition-all text-center">
+                                    Lamar
+                                    </a>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                        <div class="bg-slate-50 border-2 border-dashed border-slate-200 p-16 rounded-[3rem] text-center">
+                            <p class="text-slate-400 font-bold italic">Belum ada lowongan terbuka untuk saat ini.</p>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+        </div>
+
+        <div class="space-y-6">
+            <div class="bg-white p-8 rounded-[3rem] border border-slate-100 shadow-sm sticky top-10">
+                <h3 class="text-[10px] font-black text-slate-800 uppercase tracking-[0.2em] mb-8 pb-4 border-b border-slate-50">Informasi Kontak</h3>
+                <ul class="space-y-8">
+                    <li class="flex items-center gap-5 group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-[#7f97d9] group-hover:text-white rounded-2xl flex items-center justify-center text-[#7f97d9] shadow-sm transition-all italic font-black text-xs">WEB</div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Situs Resmi</p>
+                            <a href="<%= perusahaan.website %>" target="_blank" class="text-sm font-bold text-slate-700 hover:text-[#7f97d9] break-all">
+                                <%= perusahaan.website || 'Perusahaan Mitra' %>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="flex items-center gap-5 group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-[#7f97d9] group-hover:text-white rounded-2xl flex items-center justify-center text-[#7f97d9] shadow-sm transition-all italic font-black text-xs">MAIL</div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Email Kontak</p>
+                            <p class="text-sm font-bold text-slate-700 break-all"><%= perusahaan.email || '-' %></p>
+                        </div>
+                    </li>
+                    <li class="flex items-center gap-5 group">
+                        <div class="w-12 h-12 bg-slate-50 group-hover:bg-[#7f97d9] group-hover:text-white rounded-2xl flex items-center justify-center text-[#7f97d9] shadow-sm transition-all italic font-black text-xs">TELP</div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Telepon / WA</p>
+                            <p class="text-sm font-bold text-slate-700"><%= perusahaan.telepon || '-' %></p>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="mt-10 pt-8 border-t border-slate-50">
+                    <div class="bg-blue-50 p-6 rounded-2xl">
+                        <p class="text-[10px] font-black text-[#7f97d9] uppercase tracking-widest mb-2 leading-tight">Tips Melamar</p>
+                        <p class="text-[11px] text-slate-500 leading-relaxed font-medium">Pastikan data profil Anda lengkap dan CV sudah diunggah di menu Profil sebelum mengirim lamaran.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

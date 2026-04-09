@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil User | SIJA-JOBNET</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap");
+    body { font-family: "Plus Jakarta Sans", sans-serif; }
+  </style>
+</head>
+
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-6">
+  <div class="bg-white rounded-2xl w-[850px] flex overflow-hidden shadow-2xl">
+    
+    <div class="w-1/2 p-8 space-y-6 border-r bg-slate-50">
+      <h3 class="text-xl font-bold text-slate-800 border-b pb-4">Profile User</h3>
+      
+      <div class="grid grid-cols-1 gap-4 text-sm">
+        <div class="bg-white p-3 rounded-xl border border-slate-200">
+          <p class="text-slate-500 text-xs uppercase font-bold mb-1">Email Address</p>
+          <p class="font-semibold text-slate-800"><%= user.email %></p>
+        </div>
+
+        <% if (role === 'siswa' || role === 'tamu') { %>
+          <div class="flex gap-3">
+            <div class="bg-white p-3 rounded-xl border border-slate-200 flex-1">
+              <p class="text-slate-500 text-xs uppercase font-bold mb-1">Total Lamaran</p>
+              <p class="font-bold text-blue-600 text-lg"><%= user.totalLamaran || 0 %></p>
+            </div>
+            <div class="bg-white p-3 rounded-xl border border-slate-200 flex-1">
+              <p class="text-slate-500 text-xs uppercase font-bold mb-1">Diterima</p>
+              <p class="font-bold text-green-600 text-lg"><%= user.lamaranDiterima || 0 %></p>
+            </div>
+          </div>
+        <% } else if (role === 'perusahaan') { %>
+          <div class="bg-white p-3 rounded-xl border border-slate-200">
+            <p class="text-slate-500 text-xs uppercase font-bold mb-1">Total Lowongan Dibuka</p>
+            <p class="font-bold text-blue-600 text-lg"><%= user.totalLowongan || 0 %></p>
+          </div>
+        <% } %>
+      </div>
+
+      <div class="space-y-3 pt-2">
+        <form action="/admin/delete-foto/<%= role %>/<%= user._id %>" method="POST">
+          <button class="w-full text-[10px] bg-yellow-50 text-yellow-600 px-4 py-3 rounded-full font-black hover:bg-yellow-100 border border-yellow-100 uppercase transition">
+            Hapus Foto Profil
+          </button>
+        </form>
+
+        <form action="/admin/delete-<%= role %>/<%= user._id %>" method="POST">
+          <button class="w-full text-[10px] bg-red-50 text-red-600 px-4 py-3 rounded-full font-black hover:bg-red-100 border border-red-100 uppercase transition">
+            Hapus Semua Data
+          </button>
+        </form>
+
+        <a href="/admin/user-management" class="block text-center w-full border border-slate-300 py-3 rounded-full text-slate-600 hover:bg-white transition font-semibold text-sm">
+          Kembali
+        </a>
+      </div>
+    </div>
+
+    <div class="w-1/2 p-8 flex flex-col items-center justify-center gap-6 bg-white">
+      <div class="relative">
+        <% 
+          let folderPath = (role === 'perusahaan') ? '/uploads/logos/' : '/uploads/profile/';
+          let finalSrc = (user.foto && user.foto !== '' && user.foto !== 'undefined' && user.foto !== 'null') 
+                        ? folderPath + user.foto 
+                        : '/img/default-user.png';
+        %>
+        <img class="w-36 h-36 rounded-full object-cover border-4 border-slate-100 shadow-md" 
+             src="<%= finalSrc %>" 
+             onerror="this.src='/img/default-user.png'" />
+        
+        <span class="absolute bottom-2 right-2 bg-blue-600 text-white text-[10px] px-4 py-1 rounded-full uppercase font-black shadow-lg">
+          <%= role %>
+        </span>
+      </div>
+      
+      <div class="text-center">
+        <h3 class="font-extrabold text-2xl text-slate-800 leading-tight">
+          <%= user.name || 'Guest User' %>
+        </h3>
+        <p class="text-slate-400 text-xs mt-2 font-mono">ID: <%= user._id %></p>
+      </div>
+
+      <% if (user.cv && user.cv !== 'undefined' && user.cv !== 'null' && user.cv !== '') { %>
+        <a href="/uploads/cv/<%= user.cv %>" target="_blank" class="text-[10px] bg-indigo-50 text-indigo-600 px-10 py-3 rounded-full font-black hover:bg-indigo-100 border border-indigo-100 uppercase flex items-center gap-2 transition shadow-sm">
+          <i class="fa fa-file-pdf text-sm"></i> Lihat CV
+        </a>
+      <% } else { %>
+        <div class="text-[10px] bg-slate-50 text-slate-400 px-10 py-3 rounded-full font-black border border-slate-100 uppercase italic">
+          CV Tidak Tersedia
+        </div>
+      <% } %>
+    </div>
+
+  </div>
+</body>
+</html>

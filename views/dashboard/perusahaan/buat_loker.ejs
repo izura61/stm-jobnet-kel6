@@ -1,0 +1,62 @@
+<%- include('partials/header') %>
+
+<main class="max-w-4xl mx-auto px-6 py-12">
+    <div class="mb-10 text-center">
+        <span class="inline-block px-4 py-1.5 bg-[#7f97d9]/10 text-[#7f97d9] text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-4">Talent Acquisition</span>
+        <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight">Buka Lowongan Baru</h2>
+        <p class="text-slate-500 mt-2">Isi detail pekerjaan untuk menarik minat siswa terbaik dari SMK Negeri 1 Cimahi.</p>
+    </div>
+
+    <form action="/api/loker" method="POST" class="bg-white p-8 md:p-12 rounded-[3rem] border border-slate-100 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-[#7f97d9]/5 rounded-bl-[5rem] -mr-8 -mt-8"></div>
+        
+        <div class="space-y-8 relative z-10">
+            <div>
+                <label class="block text-[11px] font-black text-slate-400 mb-3 uppercase tracking-[0.2em]">Judul Posisi Pekerjaan</label>
+                <input type="text" name="title" placeholder="Contoh: Junior Web Developer" 
+                    class="w-full px-7 py-5 bg-slate-50 border-2 border-slate-50 rounded-[2rem] focus:border-[#7f97d9] focus:bg-white outline-none transition-all shadow-inner text-slate-700 font-semibold" required>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <label class="block text-[11px] font-black text-slate-400 mb-3 uppercase tracking-[0.2em]">Tipe Pekerjaan</label>
+                    <div class="relative">
+                        <select name="type" class="w-full px-7 py-5 bg-slate-50 border-2 border-slate-50 rounded-[2rem] focus:border-[#7f97d9] focus:bg-white outline-none appearance-none transition-all font-semibold text-slate-700 cursor-pointer">
+                            <option>Full-Time</option>
+                            <option>Part-Time</option>
+                            <option>Internship (Magang)</option>
+                            <option>Contract</option>
+                        </select>
+                        <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-black text-slate-400 mb-3 uppercase tracking-[0.2em]">Lokasi</label>
+                    <input type="text" name="location" placeholder="Contoh: Cimahi / Remote" 
+                        class="w-full px-7 py-5 bg-slate-50 border-2 border-slate-50 rounded-[2rem] focus:border-[#7f97d9] focus:bg-white outline-none transition-all shadow-inner text-slate-700 font-semibold">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-[11px] font-black text-slate-400 mb-3 uppercase tracking-[0.2em]">Deskripsi Pekerjaan & Persyaratan</label>
+                <textarea name="description" rows="8" placeholder="Sebutkan kualifikasi, tanggung jawab, dan keuntungan bekerja di perusahaan Anda..." 
+                    class="w-full px-7 py-6 bg-slate-50 border-2 border-slate-50 rounded-[2.5rem] focus:border-[#7f97d9] focus:bg-white outline-none transition-all shadow-inner text-slate-700 font-medium leading-relaxed"></textarea>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" class="w-full py-6 bg-slate-900 text-white rounded-[2.5rem] font-black uppercase tracking-[0.3em] text-xs hover:bg-[#7f97d9] transition-all shadow-xl hover:shadow-[#7f97d9]/20 active:scale-[0.98] flex items-center justify-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                    Tayangkan Lowongan
+                </button>
+            </div>
+        </div>
+    </form>
+</main>
+
+<%- include('partials/footer') %>

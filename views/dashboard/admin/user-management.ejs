@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIJA-JOBNET | User Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap");
+    body { font-family: "Plus Jakarta Sans", sans-serif; }
+  </style>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+  <div class="flex min-h-screen p-6 gap-6">
+    <aside class="w-64 bg-white rounded-2xl shadow-[10px_0_40px_rgba(0,0,0,0.18)] flex flex-col">
+      <div class="p-6 font-bold text-xl border-b text-blue-600">
+        STMONE
+      </div>
+      <nav class="p-6 flex-1">
+        <ul class="space-y-3">
+          <li>
+            <a href="/admin/dashboard" class="block py-2 px-4 rounded-lg <%= currentPage === 'dashboard' ? 'bg-blue-600 text-white font-semibold' : 'text-black font-semibold hover:bg-slate-50' %>">
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="/admin/user-management" class="block py-2 px-4 rounded-lg <%= currentPage === 'user-management' ? 'bg-blue-600 text-white font-semibold' : 'text-black font-semibold hover:bg-slate-50' %>">
+              User Management
+            </a>
+          </li>
+          <li>
+            <a href="/admin/report-management" class="block py-2 px-4 rounded-lg <%= currentPage === 'report-management' ? 'bg-blue-600 text-white font-semibold' : 'text-black font-semibold hover:bg-slate-50' %>">
+              Report Management
+            </a>
+          </li>
+          <li>
+            <a href="/admin/web-monitoring" class="block py-2 px-4 rounded-lg <%= currentPage === 'web-monitoring' ? 'bg-blue-600 text-white font-semibold' : 'text-black font-semibold hover:bg-slate-50' %>">
+              Web Monitoring
+            </a>
+          </li>
+          <li>
+            <a href="/admin/logout" class="block py-2 px-4 rounded-lg hover:bg-red-100 text-red-600 font-semibold transition">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="flex-1 space-y-8">
+      <section class="bg-white rounded-2xl shadow-md p-6">
+        <h2 class="text-xl font-bold mb-4 text-slate-800">Perusahaan</h2>
+        <table class="w-full text-sm border border-slate-300">
+          <thead class="bg-slate-200 text-center text-slate-700">
+            <tr>
+              <th class="p-3 border-x border-slate-300">Nama PT</th>
+              <th class="border-x border-slate-300">Email</th>
+              <th class="border-x border-slate-300">Total Lowongan</th>
+              <th class="border-x border-slate-300">Total Pelamar</th>
+              <th class="border-x border-slate-300">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (perusahaanUsers && perusahaanUsers.length > 0) { %>
+              <% perusahaanUsers.forEach(p => { %>
+                <% if (p && (p.name || p.email)) { %>
+                  <tr class="border-b hover:bg-slate-50 transition">
+                    <td class="p-3 text-left font-semibold text-blue-600 border-x border-slate-300">
+                      <a href="/admin/user-profile/perusahaan/<%= p._id %>" class="hover:underline"><%= p.name %></a>
+                    </td>
+                    <td class="text-center border-x border-slate-300"><%= p.email %></td>
+                    <td class="text-center border-x border-slate-300"><%= p.totalLowongan || 0 %></td>
+                    <td class="text-center border-x border-slate-300"><%= p.totalPelamar || 0 %></td>
+                    <td class="text-center border-x border-slate-300 p-2">
+                      <div class="flex justify-center gap-2">
+                        <button onclick="openModeration('perusahaan','<%= p._id %>','<%= p.name %>','<%= p.foto || p.logo %>','')" class="text-[10px] bg-red-50 text-red-600 px-4 py-2 rounded-full font-black hover:bg-red-100 border border-red-100 uppercase flex items-center gap-2">
+                          <i class="fa fa-trash"></i> Delete
+                        </button>
+                        <form action="/admin/blacklist-perusahaan/<%= p._id %>" method="POST">
+                          <button class="text-[10px] bg-red-50 text-red-600 px-4 py-2 rounded-full font-black hover:bg-red-100 border border-red-100 uppercase flex items-center gap-2">
+                            <i class="fa fa-ban"></i> Blacklist
+                          </button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                <% } %>
+              <% }) %>
+            <% } else { %>
+              <tr><td colspan="5" class="p-8 text-center text-slate-400 italic">Tidak ada data perusahaan</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="bg-white rounded-2xl shadow-md p-6">
+        <h2 class="text-xl font-bold mb-4 text-slate-800">Siswa</h2>
+        <table class="w-full text-sm border border-slate-300">
+          <thead class="bg-slate-200 text-center text-slate-700">
+            <tr>
+              <th class="p-3 border-x border-slate-300">Nama</th>
+              <th class="border-x border-slate-300">Email</th>
+              <th class="border-x border-slate-300">Total Lamaran</th>
+              <th class="border-x border-slate-300">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (siswaUsers && siswaUsers.length > 0) { %>
+              <% siswaUsers.forEach(s => { %>
+                <% if (s && (s.name || s.email)) { %>
+                  <tr class="border-b hover:bg-slate-50 transition">
+                    <td class="p-3 font-semibold text-blue-600 border-x border-slate-300 text-left">
+                      <a href="/admin/user-profile/siswa/<%= s._id %>"><%= s.name %></a>
+                    </td>
+                    <td class="text-center border-x border-slate-300"><%= s.email %></td>
+                    <td class="text-center border-x border-slate-300"><%= s.totalLamaran || 0 %></td>
+                    <td class="text-center border-x border-slate-300 p-2">
+                      <div class="flex justify-center gap-2">
+                        <button onclick="openModeration('siswa','<%= s._id %>','<%= s.name %>','<%= s.foto %>','<%= s.cv %>')" class="text-[10px] bg-red-50 text-red-600 px-4 py-2 rounded-full font-black hover:bg-red-100 border border-red-100 uppercase flex items-center gap-2">
+                          <i class="fa fa-trash"></i> Delete
+                        </button>
+                        <form action="/admin/blacklist-siswa/<%= s._id %>" method="POST">
+                          <button class="text-[10px] bg-red-50 text-red-600 px-4 py-2 rounded-full font-black hover:bg-red-100 border border-red-100 uppercase flex items-center gap-2">
+                            <i class="fa fa-ban"></i> Blacklist
+                          </button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                <% } %>
+              <% }) %>
+            <% } else { %>
+              <tr><td colspan="4" class="p-8 text-center text-slate-400 italic">Tidak ada data siswa</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div id="moderationModal" class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-2xl w-[700px] flex overflow-hidden shadow-2xl">
+      <div class="w-1/2 p-6 space-y-4 border-r bg-slate-50">
+        <h3 class="text-lg font-bold text-center text-slate-800 mb-4">Profile User</h3>
+        <form id="deleteFotoForm" method="POST">
+          <button class="w-full text-[10px] bg-yellow-50 text-yellow-600 px-4 py-3 rounded-full font-black hover:bg-yellow-100 border border-yellow-100 uppercase">Hapus Foto Profil</button>
+        </form>
+        <form id="deleteUserForm" method="POST">
+          <button class="w-full text-[10px] bg-red-50 text-red-600 px-4 py-3 rounded-full font-black hover:bg-red-100 border border-red-100 uppercase">Hapus Semua Data</button>
+        </form>
+        <button onclick="closeModal()" class="w-full border border-slate-300 py-3 rounded-full text-slate-600 hover:bg-white transition font-semibold">Batal</button>
+      </div>
+      <div class="w-1/2 p-6 flex flex-col items-center justify-center gap-4 bg-white">
+        <img id="modalFoto" class="w-28 h-28 rounded-full object-cover border-4 border-slate-100 shadow-sm" src="/img/default-user.png" onerror="this.src='/img/default-user.png'" />
+        <h3 id="modalNama" class="font-bold text-xl text-center text-slate-800"></h3>
+        <a id="modalCv" target="_blank" class="text-[10px] bg-indigo-50 text-indigo-600 px-6 py-2 rounded-full font-black hover:bg-indigo-100 border border-indigo-100 uppercase flex items-center gap-2">
+          <i class="fa fa-file"></i> Lihat CV
+        </a>
+      </div>
+    </div>
+  </div>
+
+<script>
+    function openModeration(type, id, name, foto, cv) {
+      const modal = document.getElementById("moderationModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      document.getElementById("modalNama").innerText = name;
+
+      const formFoto = document.getElementById("deleteFotoForm");
+      if (formFoto) formFoto.action = "/admin/delete-foto/" + type + "/" + id;
+
+      const formUser = document.getElementById("deleteUserForm");
+      if (formUser) formUser.action = "/admin/delete-" + type + "/" + id;
+
+      const modalFoto = document.getElementById("modalFoto");
+      if (foto && foto !== 'undefined' && foto !== 'null' && foto !== '') {
+        let folder = (type === 'perusahaan') ? '/uploads/logos/' : '/uploads/profile/';
+        
+        modalFoto.src = folder + foto + "?t=" + new Date().getTime();
+      } else {
+        modalFoto.src = "/img/default-user.png";
+      }
+
+      const modalCv = document.getElementById("modalCv");
+      if (cv && cv !== 'undefined' && cv !== 'null' && cv !== '') {
+        modalCv.style.display = "flex";
+        modalCv.href = "/uploads/cv/" + cv;
+      } else {
+        modalCv.style.display = "none";
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("moderationModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    document.getElementById("deleteFotoForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      
+      const btn = this.querySelector("button");
+      const originalText = btn.innerText;
+      btn.innerText = "MENGHAPUS...";
+      btn.disabled = true;
+
+      try {
+
+        await fetch(this.action, { method: "POST" });
+        
+        document.getElementById("modalFoto").src = "/img/default-user.png";
+        
+        btn.innerText = "BERHASIL DIHAPUS";
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.disabled = false;
+        }, 2000);
+      } catch (err) {
+        console.error("Gagal hapus:", err);
+        btn.innerText = "GAGAL MENGHAPUS";
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.disabled = false;
+        }, 2000);
+      }
+    });
+
+    ScrollReveal().reveal("section", {
+      delay: 150,
+      distance: "40px",
+      origin: "bottom",
+      duration: 800,
+      interval: 100
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<footer class="bg-white border-t border-slate-100 py-10 px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+        <div class="flex items-center gap-3">
+            <img src="/images/LOGO-STM.png" class="h-10 w-auto opacity-80">
+            <div>
+                <p class="font-black text-slate-800 text-sm uppercase">STM JOB PORTAL</p>
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">SMK Negeri 1 Cimahi</p>
+            </div>
+        </div>
+        <p class="text-[10px] text-slate-400 font-medium">© 2026 COMNETA 50. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+    const profileBtn = document.getElementById('profileDropdownBtn');
+    const profileMenu = document.getElementById('profileMenu');
+    const container = document.getElementById('profileDropdownContainer');
+    
+    if (profileBtn) {
+        profileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            profileMenu.classList.toggle('hidden');
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        if (container && !container.contains(e.target)) profileMenu.classList.add('hidden');
+    });
+</script>
+</body>
+</html>
