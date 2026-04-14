@@ -32,22 +32,36 @@ app.use(session({
 const mongoose = require("mongoose");
 
 mongoose.connect(process.env.MONGO_URI).then(async () => {
-    console.log("🔥 Terhubung ke MongoDB");
+    console.log("Terhubung ke MongoDB");
     
     try {
-        const adminExists = await Admin.findOne({ username: "STMONE" });
+
+        const adminUsername = process.env.SUPERADMIN_USERNAME;
+        const adminPassword = process.env.SUPERADMIN_PASSWORD;
+
+        if (!adminUsername || !adminPassword) {
+            console.log("Password atau Username Anda Salah");
+            return;
+        }
+
+        const adminExists = await Admin.findOne({ username: adminUsername });
+
         if (!adminExists) {
             const newAdmin = new Admin({
-                username: "STMONE",
-                password: ".127.50.7.1956.50.7.36.1."
+                username: adminUsername,
+                password: adminPassword 
             });
-            await newAdmin.save();
-            console.log("✅ Superadmin default (STMONE) berhasil dibuat di Database!");
+
+        await newAdmin.save();
+            console.log(`✅ Superadmin default (${adminUsername}) berhasil dibuat di Database!`);
+        } else {
+            console.log(`ℹ️ Superadmin (${adminUsername}) sudah siap digunakan.`);
         }
-    } catch (err) {
-        console.error("Gagal membuat admin otomatis:", err);
-    }
-}).catch((err) => console.log(err));
+} catch (err) {
+    console.error("Gagal membuat admin otomatis:", err);
+}
+
+}).catch((err) => console.log("Gagal koneksi ke MongoDB:", err));
 
 app.use(express.static(path.join(__dirname, "public")));
 
