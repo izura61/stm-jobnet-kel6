@@ -1,5 +1,4 @@
 services:
-  
   app:
     build:
       context: .
@@ -23,11 +22,18 @@ services:
     container_name: kel6-mongodb
     restart: unless-stopped
     ports:
-      - "27066:27017" 
+      - "27066:27017"
     environment:
-      MONGO_INITDB_DATABASE: stmjob 
+      MONGO_INITDB_DATABASE: stmjob
     volumes:
       - kel6-mongo-data:/data/db
+    networks:
+      - kel6-network
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: kel6-cloudflare-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token eyJhIjoiY2VmMmU0MzI0NmFjODdiMjQ4ZmQ4YTA3ZjYxOTAyNjciLCJ0IjoiOTc0NGQ5MTktMWFmOS00ZDlhLTlmZmItODNjNjhlMDhlMmMzIiwicyI6IlpHUXdZelUxTWpFdE5qRTFZUzAwWkRZMExXSXdNR1F0Wkdaa1kyWmlOREEwT0RFNSJ9
     networks:
       - kel6-network
 
