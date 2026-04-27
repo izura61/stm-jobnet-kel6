@@ -1,7 +1,7 @@
 services:
   app:
     build:
-      context: .
+      context: /stm-jobnet
       dockerfile: Dockerfile
     container_name: kel6-sija-jobnet-app
     restart: unless-stopped
