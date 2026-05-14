@@ -1,6 +1,6 @@
 <%- include('partials/header', { currentPage: 'manage', title: 'Kelola Loker - STM JOB' }) %>
 
-<main class="max-w-7xl mx-auto px-4 md:px-6 py-12">
+<main class="max-w-7xl mx-auto px-4 md:px-6 py-12 pb-28 md:pb-12">
     <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
         <div>
             <h2 class="text-xs font-black text-slate-400 uppercase tracking-[0.4em] flex items-center gap-3 mb-2">
@@ -18,23 +18,24 @@
             <table class="w-full text-left border-collapse min-w-[600px]">
                 <thead class="bg-slate-50/50 text-slate-500 uppercase text-[10px] font-black tracking-widest">
                     <tr>
-                        <th class="p-6 md:p-8">Posisi & Detail</th>
-                        <th class="p-6 md:p-8 text-center">Status</th>
-                        <th class="p-6 md:p-8 text-center">Total Pelamar</th>
-                        <th class="p-6 md:p-8 text-right">Aksi</th>
+                        <th class="p-4 md:p-8">Posisi & Detail</th>
+                        <th class="p-4 md:p-8 text-center">Status</th>
+                        <th class="p-4 md:p-8 text-center">Total Pelamar</th>
+                        <th class="p-4 md:p-8 text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-50">
                     <% if (typeof listLoker !== 'undefined' && listLoker.length > 0) { %>
                         <% listLoker.forEach(loker => { %>
                         <tr class="hover:bg-slate-50/30 transition-all group">
-                            <td class="p-6 md:p-8">
+                            <td class="p-4 md:p-8">
                                 <div class="flex flex-col">
-                                    <p class="font-extrabold text-slate-800 text-lg leading-tight mb-1"><%= loker.judul %></p>
-                                    <div class="flex items-center gap-4">
+                                    <p class="font-extrabold text-slate-800 text-lg md:text-xl leading-tight mb-1"><%= loker.judul %></p>
+                                    <div class="flex flex-wrap items-center gap-2 md:gap-4 mt-1">
                                         <span class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
                                             📅 <%= new Date(loker.createdAt || Date.now()).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) %>
                                         </span>
+                                        <span class="hidden md:inline text-slate-300">•</span>
                                         <a href="/api/lowongan/<%= loker._id %>/pelamar" class="text-[10px] font-black text-[#7f97d9] uppercase tracking-widest hover:underline">
                                             Lihat List Pelamar →
                                         </a>
@@ -42,29 +43,28 @@
                                 </div>
                             </td>
 
-                            <td class="p-6 md:p-8 text-center">
+                            <td class="p-4 md:p-8 text-center">
                                 <% if(loker.status === 'Aktif') { %>
                                     <span class="inline-flex items-center px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-tighter border border-emerald-100">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Aktif
                                     </span>
-                                <% } else { %>
-                                    <span class="inline-flex items-center px-4 py-1.5 bg-slate-100 text-slate-500 rounded-full text-[10px] font-black uppercase tracking-tighter border border-slate-200">
+                                <% } else { %> <span class="inline-flex items-center px-4 py-1.5 bg-slate-100 text-slate-500 rounded-full text-[10px] font-black uppercase tracking-tighter border border-slate-200">
                                         <span class="w-1.5 h-1.5 rounded-full bg-slate-400 mr-2"></span> Tutup
                                     </span>
                                 <% } %>
                             </td>
 
-                            <td class="p-6 md:p-8 text-center">
+                            <td class="p-4 md:p-8 text-center">
                                 <a href="/api/lowongan/<%= loker._id %>/pelamar" class="inline-flex flex-col items-center group/btn">
-                                    <span class="text-2xl font-black text-slate-800 group-hover/btn:text-[#7f97d9] transition-colors leading-none">
+                                    <span class="text-2xl md:text-3xl font-black text-slate-800 group-hover/btn:text-[#7f97d9] transition-colors leading-none">
                                         <%= (loker.jumlahPelamar) ? loker.jumlahPelamar : 0 %>
                                     </span>
-                                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider mt-1 underline decoration-transparent group-hover/btn:decoration-[#7f97d9]">Lihat Pelamar</span>
+                                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider mt-2 underline decoration-transparent group-hover/btn:decoration-[#7f97d9]">Lihat Pelamar</span>
                                 </a>
                             </td>
 
-                            <td class="p-6 md:p-8 text-right">
-                                <div class="flex justify-end items-center gap-2 md:gap-3">
+                            <td class="p-4 md:p-8 text-right">
+                                <div class="flex justify-end items-center gap-2">
                                     <form action="/api/lowongan/toggle-status/<%= loker._id %>" method="POST" class="inline">
                                         <button type="submit" class="px-4 md:px-5 py-2.5 <%= (loker.status === 'Aktif') ? 'bg-amber-50 text-amber-600 hover:bg-amber-500 hover:text-white' : 'bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white' %> rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm active:scale-95">
                                             <%= (loker.status === 'Aktif') ? 'Nonaktifkan' : 'Aktifkan' %>
@@ -72,8 +72,8 @@
                                     </form>
                                     
                                     <form id="delete-form-<%= loker._id %>" action="/api/lowongan/delete/<%= loker._id %>" method="POST" class="inline">
-                                        <button type="button" onclick="confirmDelete('<%= loker._id %>')" class="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-sm active:scale-95">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <button type="button" onclick="confirmDelete('<%= loker._id %>')" class="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-sm active:scale-95" title="Hapus Lowongan">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
                                         </button>
@@ -84,7 +84,7 @@
                         <% }) %>
                     <% } else { %>
                         <tr>
-                            <td colspan="4" class="p-20 text-center">
+                            <td colspan="4" class="p-12 md:p-20 text-center">
                                 <div class="flex flex-col items-center opacity-30">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -99,6 +99,43 @@
         </div>
     </div>
 </main>
+
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+    <ul class="flex justify-between items-center py-2 px-1 text-[9px] sm:text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+        <li class="flex-1">
+            <a href="/dashboard/perusahaan" class="flex flex-col items-center gap-1 hover:text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="flex-1">
+            <a href="/career-perusahaan" class="flex flex-col items-center gap-1 hover:text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                <span>Posting</span>
+            </a>
+        </li>
+        <li class="flex-1">
+            <a href="/kelola-loker" class="flex flex-col items-center gap-1 text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span>Pelamar</span>
+            </a>
+        </li>
+        <li class="flex-1">
+            <a href="/dashboard/perusahaan/help" class="flex flex-col items-center gap-1 hover:text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Help</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>

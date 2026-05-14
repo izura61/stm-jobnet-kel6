@@ -76,9 +76,26 @@
         box-shadow: 0 12px 20px -5px rgba(79, 70, 229, 0.3);
     }
     .justify-text { text-align: justify; text-justify: inter-word; }
+
+    @media (max-width: 768px) {
+        .banner-mesh {
+            height: 150px;
+            border-radius: 2rem;
+        }
+        .logo-container {
+            height: 6rem;
+            width: 6rem;
+            border-radius: 2rem;
+            border-width: 3px;
+        }
+        .premium-card {
+            border-radius: 2rem;
+            padding: 1.5rem;
+        }
+    }
 </style>
 
-<main class="profile-main max-w-7xl mx-auto px-6 py-10">
+<main class="profile-main max-w-7xl mx-auto px-6 py-10 pb-28 lg:pb-10">
     
     <% 
         const pName = (user && user.name) ? user.name : 'Company Name';
@@ -86,26 +103,26 @@
         const logoPath = (user && user.logo && user.logo !== 'default-logo.png') ? '/uploads/logos/' + user.logo : defaultLogo;
     %>
 
-    <div class="relative mb-24">
+    <div class="relative mb-24 md:mb-20">
         <div class="banner-mesh shadow-lg"></div>
-        <div class="absolute -bottom-12 left-10 flex flex-row items-end gap-6 w-[calc(100%-80px)]">
+        <div class="absolute -bottom-16 md:-bottom-12 left-6 md:left-10 flex flex-row items-end gap-4 md:gap-6 w-[calc(100%-48px)]">
             <div class="logo-container">
                 <img src="<%= logoPath %>" onerror="this.src='<%= defaultLogo %>'" alt="Logo">
             </div>
-            <div class="mb-4 flex-1">
-                <h1 class="text-2xl md:text-4xl font-black text-slate-800 tracking-tight leading-tight uppercase truncate">
+            <div class="mb-2 md:mb-4 flex-1 min-w-0">
+                <h1 class="text-xl md:text-3xl lg:text-4xl font-black text-slate-800 tracking-tight leading-tight uppercase truncate">
                     <%= pName %>
                 </h1>
-                <p class="text-[#7f97d9] font-bold uppercase text-[10px] md:text-xs tracking-[0.2em] mt-1">
+                <p class="text-[#7f97d9] font-bold uppercase text-[9px] md:text-[10px] lg:text-xs tracking-[0.2em] mt-1 truncate">
                     ID MITRA: <%= user._id.toString().substring(0,8).toUpperCase() %>
                 </p>
             </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10"> 
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10"> 
         <div class="lg:col-span-4 space-y-6">
-            <div class="premium-card p-8">
+            <div class="premium-card p-6 md:p-8">
                 <h3 class="label-caps mb-6 text-indigo-600">Info Kontak</h3>
                 <div class="space-y-4">
                     <div>
@@ -129,7 +146,7 @@
                 </div>
             </div>
 
-            <div class="bg-slate-900 p-8 rounded-[2.5rem] text-white">
+            <div class="bg-slate-900 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] text-white">
                 <h3 class="label-caps opacity-40 text-white mb-4">Bio Singkat</h3>
                 <p class="text-xs leading-relaxed font-medium text-slate-400 justify-text">
                     <%= user.deskripsi || 'Belum ada deskripsi profil.' %>
@@ -138,12 +155,12 @@
         </div>
 
         <div class="lg:col-span-8">
-            <div class="premium-card p-8 md:p-12">
-                <div class="flex items-center gap-4 mb-10">
-                    <div class="h-12 w-12 bg-indigo-50 rounded-xl flex items-center justify-center text-xl">⚙️</div>
+            <div class="premium-card p-6 md:p-8 lg:p-12">
+                <div class="flex items-center gap-4 mb-8 md:mb-10">
+                    <div class="h-10 w-10 md:h-12 md:w-12 bg-indigo-50 rounded-xl flex items-center justify-center text-lg md:text-xl flex-shrink-0">⚙️</div>
                     <div>
-                        <h3 class="text-xl font-black text-slate-800 leading-none">Edit Profile</h3>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Perbarui identitas industri Anda</p>
+                        <h3 class="text-lg md:text-xl font-black text-slate-800 leading-none">Edit Profile</h3>
+                        <p class="text-[9px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Perbarui identitas industri Anda</p>
                     </div>
                 </div>
 
@@ -199,6 +216,43 @@
         </div>
     </div>
 </main>
+
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+    <ul class="flex justify-between items-center py-2 px-1 text-[9px] sm:text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+        <li class="flex-1">
+            <a href="/dashboard/perusahaan" class="flex flex-col items-center gap-1 hover:text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="flex-1">
+            <a href="/career-perusahaan" class="flex flex-col items-center gap-1 hover:text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                <span>Posting</span>
+            </a>
+        </li>
+        <li class="flex-1">
+            <a href="/kelola-loker" class="flex flex-col items-center gap-1 hover:text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span>Pelamar</span>
+            </a>
+        </li>
+        <li class="flex-1">
+            <a href="/dashboard/perusahaan/help" class="flex flex-col items-center gap-1 hover:text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Help</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
