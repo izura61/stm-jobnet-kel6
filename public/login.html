@@ -12,6 +12,7 @@
       box-sizing: border-box; 
       font-family: "Plus Jakarta Sans", sans-serif; 
     }
+    
     body { 
       min-height: 100vh; 
       display: flex; 
@@ -21,6 +22,7 @@
       position: relative; 
       background-color: #f0f4ff; 
     }
+    
     .mesh-gradient { 
       position: absolute; 
       top: 0; 
@@ -37,11 +39,13 @@
       filter: blur(40px); 
       animation: meshMove 15s ease infinite alternate; 
     }
+    
     @keyframes meshMove { 
       0% { transform: scale(1) rotate(0deg); } 
       50% { transform: scale(1.2) rotate(3deg); } 
       100% { transform: scale(1) rotate(0deg); } 
     }
+    
     .orb { 
       position: absolute; 
       border-radius: 50%; 
@@ -50,6 +54,7 @@
       opacity: 0.6; 
       animation: float 20s infinite ease-in-out; 
     }
+    
     .orb-1 { 
       width: 400px; 
       height: 400px; 
@@ -57,6 +62,7 @@
       top: -10%; 
       left: -10%; 
     }
+    
     .orb-2 { 
       width: 300px; 
       height: 300px; 
@@ -65,11 +71,13 @@
       right: 10%; 
       animation-delay: -5s; 
     }
+    
     @keyframes float { 
       0%, 100% { transform: translate(0, 0); } 
       33% { transform: translate(30px, 50px); } 
       66% { transform: translate(-20px, 20px); } 
     }
+    
     .container { 
       width: 95%; 
       max-width: 1050px; 
@@ -83,6 +91,7 @@
       box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.1); 
       z-index: 10; 
     }
+    
     .left { 
       width: 42%; 
       background: linear-gradient(135deg, rgba(99,102,241,0.85) 0%, rgba(79,70,229,0.9) 100%); 
@@ -93,21 +102,25 @@
       justify-content: center; 
       text-align: center; 
     }
+    
     .left img { 
       width: 200px; 
       margin: 0 auto 35px; 
     }
+    
     .left h1 { 
       font-size: 36px; 
       font-weight: 800; 
       margin-bottom: 20px; 
       line-height: 1.1; 
     }
+    
     .left p { 
       font-size: 15px; 
       line-height: 1.8; 
       opacity: 0.9; 
     }
+    
     .right { 
       width: 58%; 
       padding: 60px; 
@@ -116,22 +129,26 @@
       justify-content: center; 
       background: rgba(255, 255, 255, 0.2); 
     }
+    
     .right h2 { 
       font-size: 32px; 
       color: #1e1b4b; 
       margin-bottom: 8px; 
       font-weight: 800; 
     }
+    
     .right p.subtitle { 
       font-size: 14px; 
       color: #475569; 
       margin-bottom: 35px; 
     }
+    
     form { 
       display: flex; 
       flex-direction: column; 
       gap: 20px; 
     }
+    
     input { 
       width: 100%; 
       padding: 16px 20px; 
@@ -140,12 +157,15 @@
       outline: none; 
       font-size: 14px; 
       background: rgba(255, 255, 255, 0.7); 
+      transition: 0.3s;
     }
+    
     input:focus { 
       border-color: #6366f1; 
       background: #fff; 
       box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); 
     }
+    
     .btn-login { 
       margin-top: 10px; 
       padding: 16px; 
@@ -156,10 +176,15 @@
       font-size: 16px; 
       font-weight: 700; 
       cursor: pointer; 
+      transition: 0.3s;
     }
+    
     .btn-login:hover { 
       background: #4338ca; 
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
     }
+    
     .or-text { 
       margin: 30px 0 20px; 
       font-size: 12px; 
@@ -170,6 +195,7 @@
       letter-spacing: 1px; 
       font-weight: 600; 
     }
+    
     .or-text::before, 
     .or-text::after { 
       content: ""; 
@@ -178,10 +204,12 @@
       background: rgba(0, 0, 0, 0.05); 
       margin: 0 15px; 
     }
+    
     .btn-group { 
       display: flex; 
       gap: 15px; 
     }
+    
     .btn-outline { 
       flex: 1; 
       padding: 14px; 
@@ -192,40 +220,89 @@
       font-size: 14px; 
       font-weight: 700; 
       cursor: pointer; 
+      transition: 0.3s;
     }
+    
     .btn-outline:hover { 
       background: #fff; 
     }
-    @media (max-width: 900px) { 
-      .container { 
-        flex-direction: column; 
-        width: 92%; 
-        margin: 20px; 
-      } 
-      .left, .right { 
-        width: 100%; 
-        padding: 40px; 
-      } 
-    }
+
     .toast-notification {
-      position: fixed;
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
+      visibility: hidden;
+      min-width: 250px;
+      margin-left: -125px;
       background-color: #ef4444; 
       color: white;
-      padding: 16px 24px;
-      border-radius: 12px; 
-      box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+      text-align: center;
+      border-radius: 8px;
+      padding: 16px;
+      position: fixed;
+      z-index: 100;
+      left: 50%;
+      bottom: 30px;
       font-size: 14px;
       font-weight: 600;
-      text-align: center;
-      z-index: 9999;
-      transition: top 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
-      max-width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: opacity 0.5s ease, bottom 0.5s ease;
+      opacity: 0;
     }
+
     .toast-notification.show {
-      top: 30px;
+      visibility: visible;
+      opacity: 1;
+      bottom: 50px;
+    }
+
+    @media (max-width: 900px) { 
+      /* Bagian body dihapus agar tetap mengikuti overflow: hidden dari css default */
+      .container { 
+        flex-direction: column; 
+        width: 90%; 
+        max-width: 500px; 
+        min-height: auto;
+        margin: auto; 
+      } 
+      .left { 
+        display: none; 
+      } 
+      .right { 
+        width: 100%; 
+        padding: 50px 40px; 
+      } 
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: 95%;
+        border-radius: 24px;
+      }
+      .right {
+        padding: 40px 24px; 
+      }
+      .right h2 {
+        font-size: 28px;
+      }
+      .right p.subtitle {
+        font-size: 13px;
+        margin-bottom: 24px;
+      }
+      form {
+        gap: 15px;
+      }
+      input {
+        padding: 14px 16px;
+      }
+      .btn-group {
+        flex-direction: column; 
+      }
+      .orb-1 {
+        width: 250px;
+        height: 250px;
+      }
+      .orb-2 {
+        width: 200px;
+        height: 200px;
+      }
     }
   </style>
 </head>

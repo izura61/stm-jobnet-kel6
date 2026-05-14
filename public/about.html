@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | STM-JOB SMKN 1 Cimahi</title>
+    <title>About Us | SIJA-JOBNET SMKN 1 Cimahi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://unpkg.com/scrollreveal"></script>
@@ -28,11 +28,13 @@
 </head>
 <body class="bg-slate-50 text-slate-800">
 
+<!-- Header Utama -->
 <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex justify-between items-center">
     <div class="flex items-center gap-3">
         <img src="images/LOGO-STM.png" class="w-10 h-10 object-contain" alt="Logo">
         <h1 class="text-2xl font-black tracking-tighter text-blue-600">STM<span class="text-slate-800">-JOB</span></h1>
     </div>
+    <!-- Menu ini otomatis hilang di Mobile -->
     <ul class="hidden md:flex gap-8 font-semibold text-sm uppercase tracking-wider text-slate-600">
         <li><a href="index.html" class="hover:text-blue-600 transition">Home</a></li>
         <li><a href="#vision" class="hover:text-blue-600 transition">Visi & Misi</a></li>
@@ -135,7 +137,8 @@
     </div>
 </section>
 
-<footer class="bg-slate-900 text-slate-400 p-12 lg:p-20 border-t border-slate-800">
+<!-- FOOTER: Ditambahkan class pb-28 agar di mobile teks copyright tidak tertutup navbar -->
+<footer class="bg-slate-900 text-slate-400 p-12 pb-28 lg:p-20 border-t border-slate-800">
     <div class="max-w-7xl mx-auto flex flex-col items-center text-center space-y-8">
         <div class="flex items-center gap-3 grayscale invert opacity-80">
             <img src="images/LOGO-STM.png" class="w-12 h-12 object-contain" alt="Logo">
@@ -151,6 +154,30 @@
         </div>
     </div>
 </footer>
+
+<!-- NAVBAR BOTTOM (Hanya tampil di Mobile/Layar Kecil) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+    <ul class="flex justify-around items-center py-3 px-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+        <li>
+            <a href="index.html" class="flex flex-col items-center gap-1.5 hover:text-blue-600 transition">
+                <i class="fas fa-home text-lg"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li>
+            <a href="#vision" class="flex flex-col items-center gap-1.5 hover:text-blue-600 transition">
+                <i class="fas fa-bullseye text-lg"></i>
+                <span>Visi Misi</span>
+            </a>
+        </li>
+        <li>
+            <a href="#stats" class="flex flex-col items-center gap-1.5 hover:text-blue-600 transition">
+                <i class="fas fa-chart-line text-lg"></i>
+                <span>Pencapaian</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 <script>
     ScrollReveal().reveal('.reveal', { 
