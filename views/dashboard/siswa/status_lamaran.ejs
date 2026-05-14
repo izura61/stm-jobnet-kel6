@@ -1,6 +1,6 @@
 <%- include('partials/header', { title: 'Status Lamaran - STM JOB', currentPage: 'status' }) %>
 
-<main class="max-w-7xl mx-auto px-6 py-12">
+<main class="max-w-7xl mx-auto px-6 py-12 pb-28 md:pb-12">
     <div class="mb-10 text-center md:text-left">
         <h2 class="text-xs font-black text-slate-400 uppercase tracking-[0.4em] flex items-center justify-center md:justify-start gap-3 mb-4">
             <span class="w-12 h-[3px] bg-[#7f97d9] rounded-full"></span> Tracking Lamaran
@@ -26,11 +26,11 @@
                                 <%= item.lowongan.judul %>
                             </h3>
                             <p class="text-slate-500 font-bold text-sm mb-2"><%= item.lowongan.perusahaan.name %></p>
-                            <div class="flex items-center gap-2">
+                            <div class="flex flex-wrap items-center gap-2">
                                 <span class="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[9px] font-black uppercase tracking-wider">
                                     ID: #<%= item._id.toString().slice(-6).toUpperCase() %>
                                 </span>
-                                <span class="text-slate-300">•</span>
+                                <span class="text-slate-300 hidden sm:inline">•</span>
                                 <span class="text-[10px] text-slate-400 font-bold uppercase">
                                     <%= new Date(item.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) %>
                                 </span>
@@ -38,30 +38,31 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-col items-start md:items-center min-w-[180px]">
-                        <% if(item.status === 'Diterima') { %>
-                            <div class="px-6 py-2.5 bg-emerald-50 text-emerald-600 rounded-2xl border border-emerald-100 w-full text-center shadow-sm shadow-emerald-100">
-                                <div class="flex items-center justify-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                                    <span class="text-[11px] font-black uppercase tracking-widest">Diterima</span>
+                    <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+                        <div class="w-full sm:w-auto flex flex-col items-center min-w-[180px]">
+                            <% if(item.status === 'Diterima') { %>
+                                <div class="px-6 py-2.5 bg-emerald-50 text-emerald-600 rounded-2xl border border-emerald-100 w-full text-center shadow-sm shadow-emerald-100">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                        <span class="text-[11px] font-black uppercase tracking-widest">Diterima</span>
+                                    </div>
                                 </div>
-                            </div>
-                        <% } else if(item.status === 'Ditolak') { %>
-                            <div class="px-6 py-2.5 bg-rose-50 text-rose-500 rounded-2xl border border-rose-100 w-full text-center">
-                                <span class="text-[11px] font-black uppercase tracking-widest">Ditolak</span>
-                            </div>
-                        <% } else { %>
-                            <div class="px-6 py-2.5 bg-amber-50 text-amber-600 rounded-2xl border border-amber-100 w-full text-center">
-                                <span class="text-[11px] font-black uppercase tracking-widest">Pending Review</span>
-                            </div>
-                        <% } %>
-                    </div>
+                            <% } else if(item.status === 'Ditolak') { %>
+                                <div class="px-6 py-2.5 bg-rose-50 text-rose-500 rounded-2xl border border-rose-100 w-full text-center">
+                                    <span class="text-[11px] font-black uppercase tracking-widest">Ditolak</span>
+                                </div>
+                            <% } else { %>
+                                <div class="px-6 py-2.5 bg-amber-50 text-amber-600 rounded-2xl border border-amber-100 w-full text-center">
+                                    <span class="text-[11px] font-black uppercase tracking-widest">Pending Review</span>
+                                </div>
+                            <% } %>
+                        </div>
 
-                    <div class="md:ml-4 flex items-center">
                         <a href="/dashboard/siswa/company/<%= item.lowongan.perusahaan._id %>" 
-                           class="flex items-center justify-center w-14 h-14 bg-slate-50 text-slate-400 rounded-2xl hover:bg-[#7f97d9] hover:text-white hover:rotate-90 transition-all duration-500 shadow-sm border border-slate-100"
+                           class="flex items-center justify-center w-full sm:w-14 h-12 sm:h-14 bg-slate-50 text-slate-400 rounded-2xl hover:bg-[#7f97d9] hover:text-white hover:rotate-90 transition-all duration-500 shadow-sm border border-slate-100"
                            title="Lihat Profil Perusahaan">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <span class="sm:hidden text-xs font-bold mr-2 uppercase tracking-widest">Lihat Detail</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
                         </a>
@@ -69,20 +70,57 @@
                 </div>
             <% }) %>
         <% } else { %>
-            <div class="bg-white p-20 rounded-[4rem] border border-dashed border-slate-200 text-center shadow-inner">
+            <div class="bg-white p-10 md:p-20 rounded-[3rem] md:rounded-[4rem] border border-dashed border-slate-200 text-center shadow-inner">
                 <div class="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-200">
                     <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-black text-slate-800 mb-2">Belum Ada Lamaran</h3>
-                <p class="text-slate-400 mb-10 max-w-sm mx-auto font-medium">Kamu belum melamar pekerjaan apapun. Ayo temukan pekerjaan impianmu sekarang!</p>
-                <a href="/career-siswa" class="px-10 py-4 bg-[#7f97d9] hover:bg-slate-900 text-white text-[11px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-xl shadow-[#7f97d9]/20">
+                <h3 class="text-xl md:text-2xl font-black text-slate-800 mb-2">Belum Ada Lamaran</h3>
+                <p class="text-slate-400 mb-10 max-w-sm mx-auto font-medium text-sm md:text-base">Kamu belum melamar pekerjaan apapun. Ayo temukan pekerjaan impianmu sekarang!</p>
+                <a href="/career-siswa" class="px-8 md:px-10 py-4 bg-[#7f97d9] hover:bg-slate-900 text-white text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-xl shadow-[#7f97d9]/20 block sm:inline-block">
                     Cari Lowongan Sekarang
                 </a>
             </div>
         <% } %>
     </div>
 </main>
+
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+    <ul class="flex justify-between items-center py-2 px-1 text-[9px] sm:text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+        <li class="flex-1">
+            <a href="/dashboard/siswa" class="flex flex-col items-center gap-1 hover:text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+                <span>Company</span>
+            </a>
+        </li>
+        <li class="flex-1">
+            <a href="/career-siswa" class="flex flex-col items-center gap-1 hover:text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span>Career</span>
+            </a>
+        </li>
+        <li class="flex-1">
+            <a href="/dashboard/siswa/lamaran" class="flex flex-col items-center gap-1 text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+                <span>List</span>
+            </a>
+        </li>
+        <li class="flex-1">
+            <a href="/dashboard/siswa/help" class="flex flex-col items-center gap-1 hover:text-[#7f97d9] transition text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Help</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 <%- include('partials/footer') %>
