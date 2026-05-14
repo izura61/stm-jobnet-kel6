@@ -55,7 +55,7 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
         await newAdmin.save();
             console.log(`✅ Superadmin default (${adminUsername}) berhasil dibuat di Database!`);
         } else {
-            console.log(`ℹ️ Superadmin (${adminUsername}) sudah siap digunakan.`);
+            console.log(`siap digunakan`);
         }
 } catch (err) {
     console.error("Gagal membuat admin otomatis:", err);
