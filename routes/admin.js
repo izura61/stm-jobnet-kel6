@@ -66,7 +66,6 @@ router.get("/dashboard", adminAuth, async (req, res) => {
 
 router.get("/user-management", adminAuth, async (req, res) => {
   try {
-    // Baris pengecekan adminVerified SUDAH DIHAPUS dari sini
 
     const perusahaanUsers = await Perusahaan.find();
     const siswaUsers = await Siswa.find();
