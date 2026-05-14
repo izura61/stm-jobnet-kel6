@@ -66,7 +66,7 @@
             </ul>
 
             <div class="relative inline-block text-left" id="profileDropdownContainer">
-                <button id="profileDropdownBtn" class="flex items-center gap-3 bg-white/10 pl-4 pr-1 py-1 rounded-full border border-white/20 hover:bg-white/20 transition-all focus:outline-none cursor-pointer">
+                <button id="profileDropdownBtn" class="flex items-center gap-0 sm:gap-3 bg-white/10 p-1 sm:pl-4 sm:pr-1 sm:py-1 rounded-full border border-white/20 hover:bg-white/20 transition-all focus:outline-none cursor-pointer">
                     <span class="text-xs font-bold hidden sm:block"><%= userFirstName %></span>
                     <div class="h-9 w-9 rounded-full bg-white flex items-center justify-center overflow-hidden border border-slate-100">
                         <img src="<%= userPhoto %>" onerror="this.src='<%= avatarDefault %>'" class="w-full h-full object-cover">
@@ -89,7 +89,7 @@
     </nav>
 
     <script>
-        // Script Dropdown Siswa
+
         const profileBtn = document.getElementById('profileDropdownBtn');
         const profileMenu = document.getElementById('profileMenu');
         const profileContainer = document.getElementById('profileDropdownContainer');
@@ -100,7 +100,6 @@
                 profileMenu.classList.toggle('hidden');
             });
 
-            // Tutup dropdown jika klik di luar
             document.addEventListener('click', (e) => {
                 if (!profileContainer.contains(e.target)) {
                     profileMenu.classList.add('hidden');
